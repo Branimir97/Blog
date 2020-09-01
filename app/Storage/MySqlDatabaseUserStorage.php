@@ -82,6 +82,7 @@ class MySqlDatabaseUserStorage implements UserStorageInterface
         $correct_username = false;
         $correct_password = false;
         $is_admin = false;
+        $current_user = null;
 
         $statement = $this->db->prepare("
             SELECT username, password, role FROM users
@@ -106,6 +107,7 @@ class MySqlDatabaseUserStorage implements UserStorageInterface
                 $correct_username = true;
                 $correct_password = true;
 
+                $current_user = $user_db->username;
                 if($user_db->role === "admin")
                 {
                     $is_admin = true;
@@ -115,12 +117,14 @@ class MySqlDatabaseUserStorage implements UserStorageInterface
 
         if($correct_password && $correct_username)
         {
+            $_SESSION['loggedIn'] = true;
+
             if($is_admin)
             {
-                $_SESSION['admin_loggedIn'] = true;
+                $_SESSION['loggedIn_username'] = $current_user;
                 header("Location: /adminPanel");
             } else {
-                $_SESSION['loggedIn'] = true;
+                $_SESSION['loggedIn_username'] = $current_user;
                 header("Location: /");
             }
 

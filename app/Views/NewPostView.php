@@ -31,7 +31,6 @@
         <a role="button" class="btn btn-danger logout" href="/adminPanel/logout">Logout</a>
 
     <?php endif; ?>
-
 </div>
 
 <div class="container">

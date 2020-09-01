@@ -20,6 +20,12 @@
         a.logout{
             float: right;
         }
+
+        strong
+        {
+            color: darkred;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -27,20 +33,20 @@
     <h1>ADMIN PANEL</h1>
 
     <?php
-    if(isset($_SESSION['admin_loggedIn']) && $_SESSION['admin_loggedIn'] == true):?>
+    if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
 
-        <a role="button" class="btn btn-danger logout" href="/adminPanel/logout">Logout</a>
-
+        <a role="button" class="btn btn-danger logout" href="home/logout">Logout</a>
+        <p>Prijavljeni ste kao <strong><?= $_SESSION['loggedIn_username']?></strong></p>
     <?php endif;?>
 
 </div>
 
-<div class="container">
+<div class="container-fluid">
     <a role="button" class="btn btn-info" href="/addNewPost">Create new post</a>
-
-    <table class="table">
+    <a role="button" class="btn btn-primary" href="/addNewAdministrator">Add new administrator</a>
+    <table class="table text-center mt-3">
         <caption>List of posts</caption>
-        <thead class="thead-dark">
+        <thead>
             <tr>
                 <th>#</th>
                 <th>Title</th>
@@ -60,7 +66,7 @@
                    <td><?= $post->getTitle() ?></td>
                    <td><?= $post->getImgPath() ?></td>
                    <td><?= $post->getContent() ?></td>
-                   <td><?= $post->getPostedBy() ?></td>
+                   <td>Administrator <strong><?= $post->getPostedBy() ?></strong></td>
                    <td><?= $post->getCreated() ?></td>
                    <td><a role="button" href="#" class="btn btn-light"> <i class="fas fa-eye-slash"></i></a></td>
                    <td><a role="button" href="editPost/edit?id=<?=$post->getId()?>" class="btn btn-success"><i class="far fa-edit"></i></a></td>

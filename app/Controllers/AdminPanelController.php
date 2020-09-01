@@ -26,17 +26,6 @@ class AdminPanelController extends View
         }
     }
 
-    public function logoutAction()
-    {
-        session_destroy();
-        header("Location: /");
-    }
-
-    public function createPostAction()
-    {
-        header("Location: /addNewPost");
-    }
-
     public function getAllAction()
     {
         $postStorage = new MySqlDatabasePostStorage($this->db);

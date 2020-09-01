@@ -54,7 +54,7 @@
     <?php
     if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
 
-    <a role="button" class="btn btn-primary login" href="">Logout</a>
+    <a role="button" class="btn btn-primary login" href="home/logout">Logout</a>
     <?php else:?>
 
     <a role="button" class="btn btn-primary login" href="/login">Login</a>

@@ -34,7 +34,7 @@ class MySqlDatabasePostStorage implements PostStorageInterface
     public function all()
     {
         $statement = $this->db->prepare("
-            SELECT * FROM posts ORDER BY created ASC
+            SELECT * FROM posts ORDER BY created DESC
         ");
 
         $statement->setFetchMode(\PDO::FETCH_CLASS, Post::class);
@@ -55,5 +55,31 @@ class MySqlDatabasePostStorage implements PostStorageInterface
         $statement->execute();
 
         return $statement->fetch();
+    }
+
+    public function constructImgPath($image)
+    {
+        $explodedImageName = explode('.', $image['name']);
+
+        $image_extension = strtolower(end($explodedImageName));
+
+        $allowed_extensions = array('png', 'jpg', 'jpeg');
+
+        if (!in_array($image_extension, $allowed_extensions)) {
+            $_SESSION['image_errors'] = 'Wrong file format. Allowed extensions: .jpg, .png, .jpeg';
+            header("Location: /addNewPost");
+        } else {
+            if ($image['size'] > 2000000) {
+                $_SESSION['image_errors'] = 'Image size too big. Max image upload size is 2MB';
+                header("Location: /addNewPost");
+            } else {
+                $upload_destination = "/var/www/html/Blog/app//Uploaded_images/" . $image['name'];
+                move_uploaded_file($image['tmp_name'], $upload_destination);
+
+                $upload_destination_src = "Uploaded_images/" . $image['name'];
+
+                return $upload_destination_src;
+            }
+        }
     }
 }

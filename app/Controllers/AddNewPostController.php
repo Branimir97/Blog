@@ -17,68 +17,41 @@ class AddNewPostController extends View
     {
         $this->db = $db;
 
-        if(isset($_SESSION['image_errors']))
-        {
+        if (isset($_SESSION['image_errors'])) {
             $this->error = $_SESSION['image_errors'];
             session_destroy();
         }
 
 
         try {
-            echo parent::render('NewPostView', ['error'=>$this->error]);
-        } catch (TemplateNotFoundException $e)
-        {
+            echo parent::render('NewPostView', ['error' => $this->error]);
+        } catch (TemplateNotFoundException $e) {
             echo $e->getMessage();
         }
     }
 
     public function storeAction()
     {
-        if($_SERVER['REQUEST_METHOD'] === "POST")
-        {
-            if(isset($_POST['submit']))
-            {
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+            if (isset($_POST['submit'])) {
 
                 $image = $_FILES['post_image'];
 
-                $explodedImageName = explode('.', $image['name']);
+                $postStorage = new MySqlDatabasePostStorage($this->db);
 
-                $image_extension = strtolower(end($explodedImageName));
+                $imgPath = $postStorage->constructImgPath($image);
 
-                $allowed_extensions = array('png', 'jpg', 'jpeg');
+                $post = new Post();
 
-                if(!in_array($image_extension, $allowed_extensions))
-                {
-                    $_SESSION['image_errors'] = 'Wrong file format. Allowed extensions: .jpg, .png, .jpeg';
-                    header("Location: /addNewPost");
-                } else {
-                    if($image['size']>2000000)
-                    {
-                        $_SESSION['image_errors'] = 'Image size too big. Max image upload size is 2MB';
-                        header("Location: /addNewPost");
-                    }
-                    else
-                    {
-                        $upload_destination = "/var/www/html/Blog/app//Uploaded_images/".$image['name'];
-                        move_uploaded_file($image['tmp_name'], $upload_destination);
+                $post->setTitle($_POST['title']);
+                $post->setImgPath($imgPath);
+                $post->setContent($_POST['content']);
+                $post->setPostedBy($_SESSION['loggedIn_username']);
+                $post->setCreated(new \DateTime(date_default_timezone_get()));
 
-                        $upload_destination_src = "Uploaded_images/".$image['name'];
+                $postStorage->store($post);
 
-                        $post = new Post();
-
-                        $post->setTitle($_POST['title']);
-                        $post->setImgPath($upload_destination_src);
-                        $post->setContent($_POST['content']);
-                        $post->setPostedBy('ADMIN');
-                        $post->setCreated(new \DateTime(date_default_timezone_get()));
-
-                        $postStorage = new MySqlDatabasePostStorage($this->db);
-
-                        $postStorage->store($post);
-
-                        header("Location: /addNewPost");
-                    }
-                }
+                header("Location: /addNewPost");
             }
         }
     }

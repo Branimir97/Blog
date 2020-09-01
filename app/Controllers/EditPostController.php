@@ -18,6 +18,8 @@ class EditPostController extends View
     {
         $this->db = $db;
 
+        $this->postDetails = $_GET['id'];
+
         if(isset($_SESSION['image_errors']))
         {
             $this->error = $_SESSION['image_errors'];
@@ -32,12 +34,9 @@ class EditPostController extends View
         }
     }
 
-    public function editAction($id)
+    public function editAction()
     {
-        $postStorage = new MySqlDatabasePostStorage($this->db);
-        $this->postDetails = $postStorage->get($id);
 
-        var_dump($this->postDetails);
     }
 
 }
