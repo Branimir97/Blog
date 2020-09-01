@@ -50,8 +50,6 @@ class AddNewPostController extends View
                 $post->setCreated(new \DateTime(date_default_timezone_get()));
 
                 $postStorage->store($post);
-
-                header("Location: /addNewPost");
             }
         }
     }

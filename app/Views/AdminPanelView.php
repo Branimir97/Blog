@@ -53,7 +53,7 @@
                 <th>Image path</th>
                 <th>Content</th>
                 <th>Posted by</th>
-                <th>Created by</th>
+                <th>Created at</th>
                 <th>Visibility</th>
                 <th>Edit</th>
                 <th>Delete</th>

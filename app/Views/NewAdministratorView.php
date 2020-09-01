@@ -15,18 +15,95 @@
     <script src="https://kit.fontawesome.com/6aa1bd9ffa.js" crossorigin="anonymous"></script>
 
     <title>Add new administrator</title>
+    <style>
+        a.logout {
+            float: right;
+        }
+
+        p.no_admins, p.no_users {
+            font-weight: bold;
+            color: darkred;
+        }
+    </style>
 </head>
 <body>
 
 <div class="jumbotron text-center text-white bg-primary">
     <h1>ADD NEW ADMINISTRATOR</h1>
+
     <?php
     if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
 
         <a role="button" class="btn btn-danger logout" href="/home/logout">Logout</a>
+        <p>Prijavljeni ste kao <strong><?= $_SESSION['loggedIn_username'] ?></strong></p>
 
     <?php endif; ?>
 
+
+</div>
+
+<div class="container">
+    <a href="/adminPanel"><i class="fas fa-long-arrow-alt-left"></i> Go back to admin panel</a>
+
+    <div class="row mt-3">
+
+        <div class="col-sm-3 text-center">
+            <h6>Current administrator list</h6>
+
+            <?php
+            if ($admins != null): ?>
+                <table class="table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Account created at</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($admins as $admin): ?>
+                    <tr>
+                        <td><?= $admin->getUsername(); ?></td>
+                        <td><?= $admin->getCreated(); ?></td>
+                    </tr>
+                <?php endforeach;?>
+                </tbody>
+                </table>
+            <?php else:
+                ?>
+                <p class="no_admins mt-3">No admins</p>
+
+            <?php endif; ?>
+        </div>
+
+        <div class="col-sm-9 text-center">
+            <h6>Current users list</h6>
+
+            <?php
+            if ($users != null): ?>
+                <table class="table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Account created at</th>
+                    <th>Add privilegie</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($users as $user): ?>
+                    <tr>
+                        <td><?= $user->getUsername(); ?></td>
+                        <td><?= $user->getCreated(); ?></td>
+                        <td><a href="#" class="btn btn-success">Set admin <i class="fas fa-user-cog"></i></a></td>
+                    </tr>
+                <?php endforeach;?>
+                </tbody>
+                </table>
+            <?php else:
+                ?>
+                <p class="no_users mt-3">No registered users</p>
+            <?php endif; ?>
+        </div>
+    </div>
 </div>
 
 <!-- Optional JavaScript -->

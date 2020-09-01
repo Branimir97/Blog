@@ -9,4 +9,6 @@ interface UserStorageInterface
     public function save(User $user);
 
     public function authenticate(User $user);
+
+    public function all($role);
 }

@@ -26,9 +26,10 @@
 <div class="jumbotron text-center text-white bg-success">
     <h1>ADD NEW POST</h1>
     <?php
-    if (isset($_SESSION['admin_loggedIn']) && $_SESSION['admin_loggedIn'] == true):?>
+    if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
 
-        <a role="button" class="btn btn-danger logout" href="/adminPanel/logout">Logout</a>
+        <a role="button" class="btn btn-danger logout" href="/home/logout">Logout</a>
+        <p>Prijavljeni ste kao <strong><?= $_SESSION['loggedIn_username']?></strong></p>
 
     <?php endif; ?>
 </div>

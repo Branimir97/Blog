@@ -29,6 +29,9 @@ class MySqlDatabasePostStorage implements PostStorageInterface
         $statement->bindValue(':created', $post->getCreated()->format(("Y-m-d H:i:s")));
 
         $statement->execute();
+
+        header("Location: /adminPanel");
+
     }
 
     public function all()
@@ -73,7 +76,7 @@ class MySqlDatabasePostStorage implements PostStorageInterface
                 $_SESSION['image_errors'] = 'Image size too big. Max image upload size is 2MB';
                 header("Location: /addNewPost");
             } else {
-                $upload_destination = "/var/www/html/Blog/app//Uploaded_images/" . $image['name'];
+                $upload_destination = "/var/www/html/Blog/app/Uploaded_images" . $image['name'];
                 move_uploaded_file($image['tmp_name'], $upload_destination);
 
                 $upload_destination_src = "Uploaded_images/" . $image['name'];

@@ -138,6 +138,20 @@ class MySqlDatabaseUserStorage implements UserStorageInterface
             header("Location: /login");
         }
     }
+
+    public function all($role)
+    {
+        $statement = $this->db->prepare("
+            SELECT * FROM users WHERE role = '$role'
+        ");
+
+        $statement->setFetchMode(\PDO::FETCH_CLASS, User::class);
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
+
+
 }
 
 

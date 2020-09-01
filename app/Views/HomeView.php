@@ -68,7 +68,6 @@
         <h3 class="p-3"><?= $post->getTitle() ?></h3>
         <div class="fake-img">
             <img src="<?= $post->getImgPath()?>">
-
         </div>
         <p class="p-3"><?= $post->getContent() ?></p>
         <p>Posted by: <?= $post->getPostedBy() ?></p>
