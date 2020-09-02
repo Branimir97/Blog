@@ -4,6 +4,8 @@ namespace Models;
 
 class User
 {
+    protected $id;
+
     protected $username;
 
     protected $first_name;
@@ -15,6 +17,13 @@ class User
     protected $password;
 
     protected $created;
+
+    protected $role;
+
+    public function getId()
+    {
+        return $this->id;
+    }
 
     public function setUsername($username)
     {
@@ -74,6 +83,16 @@ class User
     public function getCreated()
     {
         return $this->created;
+    }
+
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
+    public function getRole()
+    {
+        return $this->role;
     }
 
 }

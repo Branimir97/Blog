@@ -11,4 +11,10 @@ interface PostStorageInterface
     public function all();
 
     public function get($id);
+
+    public function update(Post $post);
+
+    public function changeVisibility($id, $visibility);
+
+    public function delete($id);
 }

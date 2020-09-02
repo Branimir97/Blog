@@ -30,14 +30,31 @@ class MySqlDatabasePostStorage implements PostStorageInterface
 
         $statement->execute();
 
-        header("Location: /adminPanel");
+        //$_SESSION['postCreated'] = 'Successfully created post.';
+        header("Location: /addNewPost");
 
     }
 
     public function all()
     {
         $statement = $this->db->prepare("
-            SELECT * FROM posts ORDER BY created DESC
+            SELECT * FROM posts 
+            ORDER BY created DESC
+        ");
+
+        $statement->setFetchMode(\PDO::FETCH_CLASS, Post::class);
+
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
+
+    public function allVisible()
+    {
+        $statement = $this->db->prepare("
+            SELECT * FROM posts 
+            WHERE visibility != 0
+            ORDER BY created DESC
         ");
 
         $statement->setFetchMode(\PDO::FETCH_CLASS, Post::class);
@@ -50,10 +67,10 @@ class MySqlDatabasePostStorage implements PostStorageInterface
     public function get($id)
     {
         $statement = $this->db->prepare("
-            SELECT * FROM posts WHERE id = :id
+            SELECT * FROM posts WHERE id = '$id'
         ");
 
-        $statement->bindValue(":id", $id);
+        //$statement->bindValue(":id", $id);
         $statement->setFetchMode(\PDO::FETCH_CLASS, Post::class);
         $statement->execute();
 
@@ -76,7 +93,7 @@ class MySqlDatabasePostStorage implements PostStorageInterface
                 $_SESSION['image_errors'] = 'Image size too big. Max image upload size is 2MB';
                 header("Location: /addNewPost");
             } else {
-                $upload_destination = "/var/www/html/Blog/app/Uploaded_images" . $image['name'];
+                $upload_destination = "/var/www/html/Blog/app/Uploaded_images/" . $image['name'];
                 move_uploaded_file($image['tmp_name'], $upload_destination);
 
                 $upload_destination_src = "Uploaded_images/" . $image['name'];
@@ -85,4 +102,52 @@ class MySqlDatabasePostStorage implements PostStorageInterface
             }
         }
     }
+
+    public function update(Post $post)
+    {
+        $statement = $this->db->prepare("
+            UPDATE posts 
+            SET title = ':title', content = ':content'
+            WHERE id = ':id'
+        ");
+
+        $statement->bindValue(':title', $post->getTitle());
+        $statement->bindValue(':content', $post->getContent());
+        $statement->bindValue(':id', '5');
+
+        $statement->execute();
+
+        header("Location: /adminPanel");
+    }
+
+    public function changeVisibility($id, $visibility)
+    {
+        $visibilityChecker = null;
+
+        if($visibility == true)
+        {
+            $visibilityChecker = 0;
+        } else
+        {
+            $visibilityChecker = 1;
+        }
+
+        $statement = $this->db->prepare("
+            UPDATE `posts` SET `visibility` = '$visibilityChecker' WHERE `posts`.`id` = '$id';
+        ");
+
+        $statement->execute();
+
+    }
+
+    public function delete($id)
+    {
+        $statement = $this->db->prepare("
+            DELETE FROM posts WHERE id = '$id'
+        ");
+
+        $statement->execute();
+
+    }
+
 }

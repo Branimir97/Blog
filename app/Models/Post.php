@@ -11,6 +11,7 @@ class Post
     protected $content;
     protected $postedBy;
     protected $created;
+    protected $visibility;
 
 
     /**
@@ -19,6 +20,15 @@ class Post
     public function getId()
     {
         return $this->id;
+    }
+
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**
@@ -99,6 +109,22 @@ class Post
     public function setCreated($created)
     {
         $this->created = $created;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVisibility()
+    {
+        return $this->visibility;
+    }
+
+    /**
+     * @param mixed $visibility
+     */
+    public function setVisibility($visibility)
+    {
+        $this->visibility = $visibility;
     }
 
 

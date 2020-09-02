@@ -14,7 +14,7 @@ $container['config'] = function () {
         'db_driver' => 'mysql',
         'db_host' => 'localhost',
         'db_name' => 'blog',
-        'db_user' => 'admin',
+        'db_user' => 'inchoo',
         'db_password' => 'password'
     ];
 };

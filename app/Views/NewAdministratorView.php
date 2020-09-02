@@ -24,6 +24,11 @@
             font-weight: bold;
             color: darkred;
         }
+
+        strong
+        {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -47,7 +52,7 @@
 
     <div class="row mt-3">
 
-        <div class="col-sm-3 text-center">
+        <div class="col-sm-6 text-center">
             <h6>Current administrator list</h6>
 
             <?php
@@ -57,6 +62,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Account created at</th>
+                    <th>Remove privilegie</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -64,6 +70,20 @@
                     <tr>
                         <td><?= $admin->getUsername(); ?></td>
                         <td><?= $admin->getCreated(); ?></td>
+                        <td>
+                            <?php if($admin->getUsername()!=='Butko'):?>
+                            <form action="/addNewAdministrator/changeRole" method="post">
+                                <input type="hidden" name="id" value="<?= $admin->getId();?>">
+                                <input type="hidden" name="role" value="admin">
+                                <button type="submit" class="btn btn-danger" name="submit_changeRole">
+                                    Unset admin <i class="fas fa-user-cog"></i>
+                                </button>
+                            </form>
+
+                            <?php else: ?>
+                                <h6><strong>HEAD ADMIN</strong></h6>
+                            <?php endif; ?>
+                        </td>
                     </tr>
                 <?php endforeach;?>
                 </tbody>
@@ -75,7 +95,7 @@
             <?php endif; ?>
         </div>
 
-        <div class="col-sm-9 text-center">
+        <div class="col-sm-6 text-center">
             <h6>Current users list</h6>
 
             <?php
@@ -93,7 +113,15 @@
                     <tr>
                         <td><?= $user->getUsername(); ?></td>
                         <td><?= $user->getCreated(); ?></td>
-                        <td><a href="#" class="btn btn-success">Set admin <i class="fas fa-user-cog"></i></a></td>
+                        <td>
+                            <form action="/addNewAdministrator/changeRole" method="post">
+                                <input type="hidden" name="id" value="<?= $user->getId();?>">
+                                <input type="hidden" name="role" value="user">
+                                <button type="submit" class="btn btn-success" name="submit_changeRole">
+                                    Set admin <i class="fas fa-user-cog"></i>
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 <?php endforeach;?>
                 </tbody>

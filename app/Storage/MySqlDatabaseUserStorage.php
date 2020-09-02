@@ -33,30 +33,24 @@ class MySqlDatabaseUserStorage implements UserStorageInterface
 
         $registeredUsers = $statement1->fetchAll();
 
-        foreach($registeredUsers as $registered_user)
-        {
-            if(($registered_user->username) == $user->getUsername())
-            {
+        foreach ($registeredUsers as $registered_user) {
+            if (($registered_user->username) == $user->getUsername()) {
                 $used_username = true;
                 $current_username = $user->getUsername();
-            } else if ($registered_user->email == $user->getEmail())
-            {
+            } else if ($registered_user->email == $user->getEmail()) {
                 $used_email = true;
             }
         }
 
-        if($used_username)
-        {
-            $_SESSION['error'] = 'Username '. $current_username .' already exists.';
+        if ($used_username) {
+            $_SESSION['error'] = 'Username ' . $current_username . ' already exists.';
             header("Location: /signup");
 
-        } else if($used_email)
-        {
+        } else if ($used_email) {
             $_SESSION['error'] = 'Email is already in use. Try another email address.';
             header("Location: /signup");
 
-        } else
-        {
+        } else {
             $statement = $this->db->prepare("
             INSERT INTO users(username, first_name, last_name, email, password, created) 
             VALUES (:username, :first_name, :last_name, :email, :password, :created)
@@ -80,7 +74,7 @@ class MySqlDatabaseUserStorage implements UserStorageInterface
     public function authenticate(User $user)
     {
         $correct_username = false;
-        $correct_password = false;
+        $pass = false;
         $is_admin = false;
         $current_user = null;
 
@@ -94,48 +88,40 @@ class MySqlDatabaseUserStorage implements UserStorageInterface
 
         $users = $statement->fetchAll();
 
-        foreach($users as $user_db)
-        {
+        foreach ($users as $user_db) {
             $correct_password = password_verify($user->getPassword(), $user_db->password);
 
-            if($user_db->username == $user->getUsername() && !$correct_password)
-            {
+            if ($user_db->username == $user->getUsername() && !$correct_password) {
                 $correct_username = true;
 
-            } else if($user_db->username == $user->getUsername() && $correct_password)
-            {
+            } else if ($user_db->username == $user->getUsername() && $correct_password) {
                 $correct_username = true;
-                $correct_password = true;
+                $pass = true;
 
                 $current_user = $user_db->username;
-                if($user_db->role === "admin")
-                {
+                if ($user_db->role === "admin") {
                     $is_admin = true;
                 }
             }
-        }
+            if ($pass && $correct_username) {
+                $_SESSION['loggedIn'] = true;
 
-        if($correct_password && $correct_username)
-        {
-            $_SESSION['loggedIn'] = true;
+                if ($is_admin) {
+                    $_SESSION['admin_loggedIn'] = true;
+                    $_SESSION['loggedIn_username'] = $current_user;
+                    header("Location: /adminPanel");
+                } else {
+                    $_SESSION['loggedIn_username'] = $current_user;
+                    header("Location: /");
+                }
+            } else if ($correct_username == false) {
+                $_SESSION['error'] = 'User does not exist!';
+                header("Location: /login");
 
-            if($is_admin)
-            {
-                $_SESSION['loggedIn_username'] = $current_user;
-                header("Location: /adminPanel");
-            } else {
-                $_SESSION['loggedIn_username'] = $current_user;
-                header("Location: /");
+            } else if ($correct_username && $pass == false) {
+                $_SESSION['error'] = 'Wrong password!';
+                header("Location: /login");
             }
-
-        } else if ($correct_username == false){
-            $_SESSION['error'] = 'User does not exist!';
-            header("Location: /login");
-
-        } else if($correct_username && $correct_password == false)
-        {
-            $_SESSION['error'] = 'Wrong password!';
-            header("Location: /login");
         }
     }
 
@@ -151,6 +137,27 @@ class MySqlDatabaseUserStorage implements UserStorageInterface
         return $statement->fetchAll();
     }
 
+    public function changeRole($id, $role)
+    {
+        $roleSetter = null;
+
+        if($role === 'admin')
+        {
+            $roleSetter = 'user';
+        }
+         else
+        {
+            $roleSetter = 'admin';
+        }
+
+        $statement = $this->db->prepare("
+            UPDATE `users` SET `role` = '$roleSetter' WHERE `users`.`id` = '$id';
+        ");
+
+         //$statement->bindValue(':role', $roleSetter);
+
+        $statement->execute();
+    }
 
 }
 

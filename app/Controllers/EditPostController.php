@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Exceptions\TemplateNotFoundException;
+use Models\Post;
 use Models\View;
 use Storage\MySqlDatabasePostStorage;
 
@@ -17,8 +18,7 @@ class EditPostController extends View
     public function __construct(\PDO $db)
     {
         $this->db = $db;
-
-        $this->postDetails = $_GET['id'];
+        $this->postDetails = $this->editAction();
 
         if(isset($_SESSION['image_errors']))
         {
@@ -36,7 +36,36 @@ class EditPostController extends View
 
     public function editAction()
     {
+        if($_SERVER['REQUEST_METHOD'] === "POST")
+        {
+            if(isset($_POST['submit_edit']))
+            {
+                $id = $_POST['id'];
 
+                $postStorage = new MySqlDatabasePostStorage($this->db);
+                return $postStorage->get($id);
+            }
+        }
+
+    }
+
+    public function updateAction()
+    {
+        if($_SERVER['REQUEST_METHOD'] === "POST")
+        {
+            if(isset($_POST['submit_update']))
+            {
+                $post = new Post();
+
+                $post->setId($_POST['update_id']);
+                $post->setTitle($_POST['title']);
+                $post->setContent($_POST['content']);
+
+                $postStorage = new MySqlDatabasePostStorage($this->db);
+
+                $postStorage->update($post);
+            }
+        }
     }
 
 }

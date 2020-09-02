@@ -55,10 +55,16 @@
     if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
 
     <a role="button" class="btn btn-primary login" href="home/logout">Logout</a>
+
+        <?php if(isset($_SESSION['admin_loggedIn']) && $_SESSION['admin_loggedIn'] == true):?>
+            <a href="/adminPanel" class="btn btn-warning" role="button">Admin panel</a>
+        <?php endif;?>
     <?php else:?>
 
     <a role="button" class="btn btn-primary login" href="/login">Login</a>
     <?php endif;?>
+
+
 
 </div>
 <div class="container">
@@ -90,8 +96,4 @@
         crossorigin="anonymous"></script>
 </body>
 
-
-<script>
-    function openPostDetails()
-</script>
 </html>

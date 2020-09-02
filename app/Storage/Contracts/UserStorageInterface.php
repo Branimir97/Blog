@@ -11,4 +11,6 @@ interface UserStorageInterface
     public function authenticate(User $user);
 
     public function all($role);
+
+    public function changeRole($id, $role);
 }

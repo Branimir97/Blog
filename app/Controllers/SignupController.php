@@ -23,7 +23,7 @@ class SignupController extends View
         if(isset($_SESSION['error']))
         {
             $this->error = $_SESSION['error'];
-            session_destroy();
+            unset($_SESSION['error']);
         }
 
         try {

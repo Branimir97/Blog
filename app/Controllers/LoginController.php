@@ -27,13 +27,13 @@ class LoginController extends View
         if(isset($_SESSION['error']))
         {
             $this->error =  $_SESSION['error'];
-            session_destroy();
+            unset($_SESSION['error']);
         }
 
         if(isset($_SESSION['registered']))
         {
             $this->registered = $_SESSION['registered'];
-            session_destroy();
+            unset($_SESSION['registered']);
         }
 
         try {

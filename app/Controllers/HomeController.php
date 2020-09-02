@@ -15,12 +15,13 @@ class HomeController extends View
     {
         $this->db = $db;
         $this->index();
+
     }
 
     public function index()
     {
 
-        $posts = $this->getAllPosts();
+        $posts = $this->getAllVisiblePosts();
         try
         {
             echo parent::render('HomeView', ['posts' => $posts]);
@@ -31,15 +32,16 @@ class HomeController extends View
         }
     }
 
-    public function getAllPosts()
+    public function getAllVisiblePosts()
     {
         $storage = new MySqlDatabasePostStorage($this->db);
 
-        return $storage->all();
+        return $storage->allVisible();
     }
 
     public function logoutAction()
     {
+        session_unset();
         session_destroy();
         header("Location: /");
     }

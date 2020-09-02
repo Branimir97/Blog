@@ -43,6 +43,10 @@
 
     <?php endif; ?>
 
+    <?php if(isset($postCreated)): ?>
+        <div class="text-center bg-success p-3 text-white"><?= $postCreated; ?></div>
+    <?php endif; ?>
+
     <form action="addNewPost/store" method="post" enctype="multipart/form-data">
 
         <div class="form-group">

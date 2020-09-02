@@ -13,18 +13,25 @@ class AddNewPostController extends View
 
     protected $error;
 
+    protected $postCreated;
+
     public function __construct(\PDO $db)
     {
         $this->db = $db;
 
         if (isset($_SESSION['image_errors'])) {
             $this->error = $_SESSION['image_errors'];
-            session_destroy();
+            unset($_SESSION['image_errors']);
+        }
+
+        if (isset($_SESSION['postCreated'])) {
+            $this->postCreated = $_SESSION['postCreated'];
+            unset($_SESSION['postCreated']);
         }
 
 
         try {
-            echo parent::render('NewPostView', ['error' => $this->error]);
+            echo parent::render('NewPostView', ['error' => $this->error, 'postCreated'=>$this->postCreated]);
         } catch (TemplateNotFoundException $e) {
             echo $e->getMessage();
         }

@@ -10,11 +10,16 @@ class AdminPanelController extends View
 {
     protected $db;
 
+    protected $postStorage;
+
+
     protected $posts;
 
     public function __construct(\PDO $db)
     {
         $this->db = $db;
+
+        $this->postStorage = new MySqlDatabasePostStorage($this->db);
 
         $this->posts = $this->getAllAction();
 
@@ -28,8 +33,34 @@ class AdminPanelController extends View
 
     public function getAllAction()
     {
-        $postStorage = new MySqlDatabasePostStorage($this->db);
-        return $postStorage->all();
+        return $this->postStorage->all();
+    }
+
+    public function changeVisibilityAction()
+    {
+        if($_SERVER['REQUEST_METHOD'] === "POST")
+        {
+            if(isset($_POST['submit_visibility']))
+            {
+                $id = $_POST['id'];
+                $visibility = $_POST['visibility'];
+                $this->postStorage->changeVisibility($id, $visibility);
+                header("Location: /adminPanel");
+            }
+        }
+    }
+
+    public function deleteAction()
+    {
+        if($_SERVER['REQUEST_METHOD'] === "POST")
+        {
+            if(isset($_POST['submit_delete']))
+            {
+                $id = $_POST['id'];
+
+                $this->postStorage->delete($id);
+            }
+        }
     }
 
 }

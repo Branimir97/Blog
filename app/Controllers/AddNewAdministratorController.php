@@ -44,4 +44,17 @@ class AddNewAdministratorController extends View
     {
         return $this->userStorage->all('user');
     }
+
+    public function changeRoleAction()
+    {
+        if($_SERVER['REQUEST_METHOD'] === "POST")
+        {
+            if(isset($_POST['submit_changeRole']))
+            {
+                $id = $_POST['id'];
+                $role = $_POST['role'];
+                $this->userStorage->changeRole($id, $role);
+            }
+        }
+    }
 }

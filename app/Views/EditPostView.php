@@ -42,29 +42,37 @@
         <div class="text-center bg-danger p-3 text-white"><?= $error; ?></div>
 
     <?php endif; ?>
-<?php var_dump($postDetails);?>
-    <form action="editPost/update" method="post" enctype="multipart/form-data">
+
+
+    <form action="update" method="post" enctype="multipart/form-data">
+
+        <input type="hidden" name="update_id" value="<?=$postDetails->getId()?>">
 
         <div class="form-group">
             <label for="title"></label>
             <input type="text" name="title" id="title" class="form-control"
-                   aria-describedby="helpId" value="">
+                   aria-describedby="helpId" value="<?=$postDetails->getTitle()?>">
             <small id="helpId" class="text-muted">Write some good title here</small>
         </div>
 
         <div class="form-group">
             <label for="content"></label>
-            <textarea class="form-control" name="content" id="content" rows="3"></textarea>
+            <textarea class="form-control" name="content" id="content" rows="3"><?=$postDetails->getContent()?>
+            </textarea>
             <small id="helpId" class="text-muted">Write some text for your post here</small>
         </div>
-
+        <div>
+            <h6>Current photo</h6>
+            <img src="<?$postDetails->getImgPath()?>">
+            <?php echo $postDetails->getImgPath()?>
+        </div>
         <div class="form-group">
             <label for="post_image"></label>
             <input type="file" class="form-control-file" name="post_image" id="post_image" aria-describedby="fileHelpId">
             <small id="fileHelpId" class="form-text text-muted">Choose new photo, or just skip, old photo stays stored</small>
         </div>
 
-        <button type="submit" name="submit" class="btn btn-warning">Update post</button>
+        <button type="submit" name="submit_update" class="btn btn-warning">Update post</button>
 
     </form>
 </div>
