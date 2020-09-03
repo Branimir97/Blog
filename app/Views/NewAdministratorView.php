@@ -25,22 +25,24 @@
             color: darkred;
         }
 
-        strong
+        strong#disablePrivilegie
         {
             color: red;
         }
+
     </style>
 </head>
 <body>
 
-<div class="jumbotron text-center text-white bg-primary">
-    <h1>ADD NEW ADMINISTRATOR</h1>
+<div class="jumbotron text-center text-white bg-info">
+    <h1><strong>ADD NEW ADMINISTRATOR</strong></h1>
 
     <?php
     if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
 
-        <a role="button" class="btn btn-danger logout" href="/home/logout">Logout</a>
-        <p>Prijavljeni ste kao <strong><?= $_SESSION['loggedIn_username'] ?></strong></p>
+        <p>You are logged in as <strong><?= $_SESSION['loggedIn_fullName']?></strong></p>
+
+        <a role="button" class="btn btn-light logout" href="/home/logout">Logout</a>
 
     <?php endif; ?>
 
@@ -71,7 +73,8 @@
                         <td><?= $admin->getUsername(); ?></td>
                         <td><?= $admin->getCreated(); ?></td>
                         <td>
-                            <?php if($admin->getUsername()!=='Butko'):?>
+
+                            <?php if($admin->getUsername() !== $_SESSION['loggedIn_username'] ): ?>
                             <form action="/addNewAdministrator/changeRole" method="post">
                                 <input type="hidden" name="id" value="<?= $admin->getId();?>">
                                 <input type="hidden" name="role" value="admin">
@@ -81,7 +84,7 @@
                             </form>
 
                             <?php else: ?>
-                                <h6><strong>HEAD ADMIN</strong></h6>
+                                <h6><strong id="disablePrivilegie">Currently logged in</strong></h6>
                             <?php endif; ?>
                         </td>
                     </tr>
@@ -97,7 +100,6 @@
 
         <div class="col-sm-6 text-center">
             <h6>Current users list</h6>
-
             <?php
             if ($users != null): ?>
                 <table class="table">
@@ -130,6 +132,8 @@
                 ?>
                 <p class="no_users mt-3">No registered users</p>
             <?php endif; ?>
+            <h6 class="mt-3"><a href="/signup" class="btn btn-warning" role="button">Register new user</a></h6>
+
         </div>
     </div>
 </div>

@@ -51,9 +51,10 @@ class AddNewPostController extends View
                 $post = new Post();
 
                 $post->setTitle($_POST['title']);
+                $post->setIntro($_POST['intro']);
                 $post->setImgPath($imgPath);
                 $post->setContent($_POST['content']);
-                $post->setPostedBy($_SESSION['loggedIn_username']);
+                $post->setPostedBy($_SESSION['loggedIn_fullName']);
                 $post->setCreated(new \DateTime(date_default_timezone_get()));
 
                 $postStorage->store($post);

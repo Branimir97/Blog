@@ -15,36 +15,45 @@
 
     <style>
 
-        a.login
-        {
+        .container {
+            width: 600px;
+        }
+
+        a.login, a.adminPanel, a.logout {
             float: right;
         }
-        .one_post
-        {
+
+        .one_post {
             cursor: pointer;
         }
 
-        .one_post:nth-child(odd)
-        {
-            background-color: darkorange;
+        .one_post:nth-child(odd) {
+            background-color: lightgrey;
         }
 
-        .one_post:nth-child(even)
-        {
-            background-color: orangered;
+        .one_post:nth-child(even) {
+            background-color: darkgrey;
         }
 
-        .fake-img
-        {
-            height: 700px;
+        .fake-img {
+            height: 300px;
             background-color: gray;
         }
 
-        .fake-img img
-        {
+        .fake-img img {
             width: 100%;
             height: 100%;
         }
+
+        .postedBy {
+            font-size: 11px;
+            float: left;
+        }
+
+        .content {
+            clear: left;
+        }
+
     </style>
 </head>
 <body>
@@ -52,33 +61,41 @@
     <h1>Homepage</h1>
 
     <?php
-    if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
+    if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
 
-    <a role="button" class="btn btn-primary login" href="home/logout">Logout</a>
+        <a role="button" class="btn btn-light logout" href="home/logout">Logout</a>
 
-        <?php if(isset($_SESSION['admin_loggedIn']) && $_SESSION['admin_loggedIn'] == true):?>
-            <a href="/adminPanel" class="btn btn-warning" role="button">Admin panel</a>
-        <?php endif;?>
-    <?php else:?>
+        <?php if (isset($_SESSION['admin_loggedIn']) && $_SESSION['admin_loggedIn'] == true): ?>
+            <a href="/adminPanel" class="btn btn-danger adminPanel" role="button">Admin panel</a>
+        <?php endif; ?>
+    <?php else: ?>
 
-    <a role="button" class="btn btn-primary login" href="/login">Login</a>
-    <?php endif;?>
-
+        <a role="button" class="btn btn-light login" href="/login">Login</a>
+    <?php endif; ?>
 
 
 </div>
 <div class="container">
 
-    <?php foreach($posts as $post) :?>
-    <div class="one_post text-center p-3 text-white mb-3" onclick="openPostDetails();">
-        <h3 class="p-3"><?= $post->getTitle() ?></h3>
-        <div class="fake-img">
-            <img src="<?= $post->getImgPath()?>">
+    <?php if ($posts == null): ?>
+
+        <h6 class="mt-3 p-3 text-center">There are no posts on our Blog at the moment. Please check later.</h6>
+
+    <?php endif; ?>
+
+    <?php foreach ($posts as $post) : ?>
+        <div class="one_post p-3 mb-3">
+            <h4 class="p-3"><?= $post->getTitle() ?></h4>
+            <div class="fake-img">
+                <img src="<?= $post->getImgPath() ?>">
+            </div>
+            <p class="postedBy p-2 mb-0">By: <strong><?= $post->getPostedBy() ?></strong>, <?= $post->getCreated() ?>
+            </p>
+            <div class="p-2">
+                <p class="content"><?= $post->getIntro() ?></p>
+            </div>
+            <a class="btn btn-sm btn-info" href="/postDetails/get?id=<?=$post->getId()?>">READ MORE</a>
         </div>
-        <p class="p-3"><?= $post->getContent() ?></p>
-        <p>Posted by: <?= $post->getPostedBy() ?></p>
-        <p>Blog post created at: <?= $post->getCreated() ?></p>
-    </div>
     <?php endforeach; ?>
 
 </div>

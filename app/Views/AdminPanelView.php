@@ -17,13 +17,9 @@
     <title>Admin Panel</title>
 
     <style>
-        a.logout {
+        a.logout, a.home
+        {
             float: right;
-        }
-
-        strong {
-            color: darkred;
-            text-decoration: underline;
         }
 
         td img {
@@ -35,19 +31,21 @@
             cursor: pointer;
             box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
         }
+
     </style>
 </head>
 <body>
 <div class="jumbotron text-center text-white bg-info">
-    <h1>ADMIN PANEL</h1>
+    <h1><strong>ADMIN PANEL</strong></h1>
 
     <?php
     if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
 
-        <a role="button" class="btn btn-danger logout" href="/home/logout">Logout</a>
-        <p>Prijavljeni ste kao <strong><?= $_SESSION['loggedIn_username'] ?></strong></p>
+        <p>You are logged in as <strong><?= $_SESSION['loggedIn_fullName']?></strong></p>
 
-        <a role="button" class="btn btn-danger" href="/home">Home page</a>
+        <a role="button" class="btn btn-light logout" href="/home/logout">Logout</a>
+        <a role="button" class="btn btn-success home" href="/home">Homepage</a>
+
     <?php endif; ?>
 
 </div>
@@ -55,14 +53,21 @@
 <div class="container-fluid">
     <a role="button" class="btn btn-info" href="/addNewPost">Create new post</a>
     <a role="button" class="btn btn-primary" href="/addNewAdministrator">Add new administrator</a>
+
+    <?php if($posts == null):?>
+
+        <h6 class="mt-3 p-3 text-center">There are currently no posts. Here you can <a href="/addNewPost">create</a> first post for our Blog!</h6>
+
+    <?php else: ?>
+
+
     <table class="table text-center mt-3">
-        <caption>List of posts</caption>
+        <caption>List of active posts</caption>
         <thead>
         <tr>
             <th>#</th>
             <th>Title</th>
             <th>Image thumbnail</th>
-            <th>Content</th>
             <th>Posted by</th>
             <th>Created at</th>
             <th>Visibility</th>
@@ -76,25 +81,19 @@
                 <td><?= $post->getId() ?></td>
                 <td><?= $post->getTitle() ?></td>
                 <td><a href="<?= $post->getImgPath() ?>" target="_blank"><img src="<?= $post->getImgPath() ?>"></a></td>
-                <td><?= $post->getContent() ?></td>
                 <td>Administrator <strong><?= $post->getPostedBy() ?></strong></td>
                 <td><?= $post->getCreated() ?></td>
                 <td>
-                    <form action="/adminPanel/changeVisibility" method="post">
-                        <input type="hidden" name="id" value="<?= $post->getId() ?>">
-                        <input type="hidden" name="visibility" value="<?= $post->getVisibility() ?>">
 
-                        <?php if ($post->getVisibility() == false): ?>
-                            <button type="submit" class="btn btn-light" name="submit_visibility">
-                                <i class="fas fa-eye-slash"></i>
-                            </button>
-                        <?php else: ?>
-                            <button type="submit" class="btn btn-light" name="submit_visibility">
-                                <i class="fas fa-eye"></i>
-                            </button>
-
-                        <?php endif; ?>
-                    </form>
+                    <?php if($post->getVisibility() == 1): ?>
+                        <a href="adminPanel/changeVisibility?id=<?= $post->getId() ?>">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    <?php  else:?>
+                        <a href="adminPanel/changeVisibility?id=<?= $post->getId() ?>">
+                            <i class="fas fa-eye-slash"></i>
+                        </a>
+                    <?php endif; ?>
                 </td>
                 <td>
                     <form action="editPost/edit" method="post">
@@ -141,6 +140,7 @@
         <?php endforeach; ?>
         </tbody>
     </table>
+    <?php endif;?>
 </div>
 
 

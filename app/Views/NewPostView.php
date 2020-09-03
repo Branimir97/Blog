@@ -14,7 +14,7 @@
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/6aa1bd9ffa.js" crossorigin="anonymous"></script>
 
-    <title>Add new post</title>
+    <title>Create new post</title>
 
     <style>
         a.logout {
@@ -23,13 +23,13 @@
     </style>
 </head>
 <body>
-<div class="jumbotron text-center text-white bg-success">
-    <h1>ADD NEW POST</h1>
+<div class="jumbotron text-center text-white bg-info">
+    <h1><strong>CREATE NEW POST</strong></h1>
     <?php
     if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
+        <p>You are logged in as <strong><?= $_SESSION['loggedIn_fullName']?></strong></p>
 
-        <a role="button" class="btn btn-danger logout" href="/home/logout">Logout</a>
-        <p>Prijavljeni ste kao <strong><?= $_SESSION['loggedIn_username']?></strong></p>
+        <a role="button" class="btn btn-light logout" href="/home/logout">Logout</a>
 
     <?php endif; ?>
 </div>
@@ -57,8 +57,14 @@
         </div>
 
         <div class="form-group">
+            <label for="intro"></label>
+            <textarea class="form-control" name="intro" id="intro" placeholder="Post introduction" rows="3" required></textarea>
+            <small id="helpId" class="text-muted">Write some good text to attract people open your post</small>
+        </div>
+
+        <div class="form-group">
             <label for="content"></label>
-            <textarea class="form-control" name="content" id="content" placeholder="Post content" rows="3" required></textarea>
+            <textarea class="form-control" name="content" id="content" placeholder="Post content" rows="6" required></textarea>
             <small id="helpId" class="text-muted">Write some text for your post here</small>
         </div>
 

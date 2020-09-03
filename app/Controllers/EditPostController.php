@@ -51,16 +51,17 @@ class EditPostController extends View
 
     public function updateAction()
     {
+        var_dump("BOK");
         if($_SERVER['REQUEST_METHOD'] === "POST")
         {
             if(isset($_POST['submit_update']))
             {
+                var_dump("NE");
                 $post = new Post();
 
-                $post->setId($_POST['update_id']);
-                $post->setTitle($_POST['title']);
-                $post->setContent($_POST['content']);
-
+                $post->setId($this->postDetails->getId());
+                $post->setTitle($this->postDetails->getTitle());
+                $post->setContent($this->postDetails->getContent());
                 $postStorage = new MySqlDatabasePostStorage($this->db);
 
                 $postStorage->update($post);

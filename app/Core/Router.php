@@ -34,7 +34,17 @@ class Router
             }
         }
         if (isset($urlParts[2])) {
-            $viewAction = $urlParts[2] . 'Action';
+
+                if(strpos($urlParts[2], '?'))
+                {
+                    $explodedGetQuery = explode('?', $urlParts[2]);
+                    $getQuery ='?'. $explodedGetQuery[1];
+                    $viewAction=rtrim($urlParts[2], $getQuery) . 'Action';
+                }
+                else
+                {
+                    $viewAction = $urlParts[2].'Action';
+                }
         }
 
         $controllerFile = 'Controllers/' . ucfirst($controller) . 'Controller' . '.php';
@@ -57,7 +67,8 @@ class Router
                 }
                 else
                 {
-                    $controllerClass->$viewAction();
+                $controllerClass->$viewAction();
+
                 }
 
             } else {

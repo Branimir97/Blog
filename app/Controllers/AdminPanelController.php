@@ -38,16 +38,11 @@ class AdminPanelController extends View
 
     public function changeVisibilityAction()
     {
-        if($_SERVER['REQUEST_METHOD'] === "POST")
-        {
-            if(isset($_POST['submit_visibility']))
-            {
-                $id = $_POST['id'];
-                $visibility = $_POST['visibility'];
-                $this->postStorage->changeVisibility($id, $visibility);
-                header("Location: /adminPanel");
-            }
-        }
+
+        $id = $_GET['id'];
+        $this->postStorage->changeVisibility($id);
+        header("Location: /adminPanel");
+
     }
 
     public function deleteAction()

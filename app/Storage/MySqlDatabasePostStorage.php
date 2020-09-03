@@ -18,11 +18,12 @@ class MySqlDatabasePostStorage implements PostStorageInterface
     public function store(Post $post)
     {
         $statement = $this->db->prepare("
-            INSERT INTO posts(title, img_path, content, postedBy, created)
-            VALUES (:title, :img_path, :content, :postedBy, :created)
+            INSERT INTO posts(title, intro, img_path, content, postedBy, created)
+            VALUES (:title, :intro, :img_path, :content, :postedBy, :created)
         ");
 
         $statement->bindValue(':title', $post->getTitle());
+        $statement->bindValue(':intro', $post->getIntro());
         $statement->bindValue(':img_path', $post->getImgPath());
         $statement->bindValue(':content', $post->getContent());
         $statement->bindValue(':postedBy', $post->getPostedBy());
@@ -67,10 +68,9 @@ class MySqlDatabasePostStorage implements PostStorageInterface
     public function get($id)
     {
         $statement = $this->db->prepare("
-            SELECT * FROM posts WHERE id = '$id'
+            SELECT * FROM posts WHERE id = 1
         ");
 
-        //$statement->bindValue(":id", $id);
         $statement->setFetchMode(\PDO::FETCH_CLASS, Post::class);
         $statement->execute();
 
@@ -107,24 +107,37 @@ class MySqlDatabasePostStorage implements PostStorageInterface
     {
         $statement = $this->db->prepare("
             UPDATE posts 
-            SET title = ':title', content = ':content'
-            WHERE id = ':id'
+            SET title = :title, content = :content
+            WHERE id = 1
         ");
 
         $statement->bindValue(':title', $post->getTitle());
         $statement->bindValue(':content', $post->getContent());
-        $statement->bindValue(':id', '5');
 
         $statement->execute();
 
         header("Location: /adminPanel");
     }
 
-    public function changeVisibility($id, $visibility)
+    public function changeVisibility($id)
     {
+
+        $statement1 = $this->db->prepare("
+            SELECT visibility
+            FROM posts
+            WHERE id = :id
+        ");
+
+
+        $statement1->bindValue(':id', $id);
+        $statement1->setFetchMode(\PDO::FETCH_CLASS, Post::class);
+        $statement1->execute();
+
+        $visibility = $statement1->fetch()->getVisibility();
+
         $visibilityChecker = null;
 
-        if($visibility == true)
+        if($visibility == 1)
         {
             $visibilityChecker = 0;
         } else
@@ -133,7 +146,7 @@ class MySqlDatabasePostStorage implements PostStorageInterface
         }
 
         $statement = $this->db->prepare("
-            UPDATE `posts` SET `visibility` = '$visibilityChecker' WHERE `posts`.`id` = '$id';
+            UPDATE `posts` SET `visibility` = '$visibilityChecker' WHERE `posts`.`id` = '1';
         ");
 
         $statement->execute();

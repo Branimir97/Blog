@@ -23,12 +23,13 @@
     </style>
 </head>
 <body>
-<div class="jumbotron text-center bg-warning">
-    <h1>EDIT POST</h1>
+<div class="jumbotron text-center text-white bg-info">
+    <h1><strong>EDIT POST</strong></h1>
     <?php
     if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
+        <p>You are logged in as <strong><?= $_SESSION['loggedIn_fullName']?></strong></p>
 
-        <a role="button" class="btn btn-danger logout" href="/home/logout">Logout</a>
+        <a role="button" class="btn btn-light logout" href="/home/logout">Logout</a>
 
     <?php endif; ?>
 
@@ -45,8 +46,8 @@
 
 
     <form action="update" method="post" enctype="multipart/form-data">
-
-        <input type="hidden" name="update_id" value="<?=$postDetails->getId()?>">
+        <?= var_dump($postDetails); ?>
+       <input type="text" name="update_id" value="<?= $postDetails->getId()?>">
 
         <div class="form-group">
             <label for="title"></label>
@@ -56,11 +57,17 @@
         </div>
 
         <div class="form-group">
+            <label for="intro"></label>
+            <textarea class="form-control" name="intro" id="intro" placeholder="Post introduction" rows="3" required><?= $postDetails->getIntro()?></textarea>
+            <small id="helpId" class="text-muted">Write some good text to attract people open your post</small>
+        </div>
+
+        <div class="form-group">
             <label for="content"></label>
-            <textarea class="form-control" name="content" id="content" rows="3"><?=$postDetails->getContent()?>
-            </textarea>
+            <textarea class="form-control" name="content" id="content" placeholder="Post content" rows="6" required><?= $postDetails->getContent()?></textarea>
             <small id="helpId" class="text-muted">Write some text for your post here</small>
         </div>
+
         <div>
             <h6>Current photo</h6>
             <img src="<?$postDetails->getImgPath()?>">

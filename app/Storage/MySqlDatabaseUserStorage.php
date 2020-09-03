@@ -76,10 +76,12 @@ class MySqlDatabaseUserStorage implements UserStorageInterface
         $correct_username = false;
         $pass = false;
         $is_admin = false;
-        $current_user = null;
+        $current_username = null;
+        $current_firstName = null;
+        $current_lastName = null;
 
         $statement = $this->db->prepare("
-            SELECT username, password, role FROM users
+            SELECT username, first_name, last_name, password, role FROM users
         ");
 
         $statement->setFetchMode(\PDO::FETCH_OBJ);
@@ -98,7 +100,9 @@ class MySqlDatabaseUserStorage implements UserStorageInterface
                 $correct_username = true;
                 $pass = true;
 
-                $current_user = $user_db->username;
+                $current_username = $user_db->username;
+                $current_firstName = $user_db->first_name;
+                $current_lastName = $user_db->last_name;
                 if ($user_db->role === "admin") {
                     $is_admin = true;
                 }
@@ -108,10 +112,12 @@ class MySqlDatabaseUserStorage implements UserStorageInterface
 
                 if ($is_admin) {
                     $_SESSION['admin_loggedIn'] = true;
-                    $_SESSION['loggedIn_username'] = $current_user;
+                    $_SESSION['loggedIn_username'] = $current_username;
+                    $_SESSION['loggedIn_fullName'] = $current_firstName . ' ' . $current_lastName;
                     header("Location: /adminPanel");
                 } else {
-                    $_SESSION['loggedIn_username'] = $current_user;
+                    $_SESSION['loggedIn_username'] = $current_username;
+                    $_SESSION['loggedIn_fullName'] = $current_firstName . ' ' . $current_lastName;
                     header("Location: /");
                 }
             } else if ($correct_username == false) {
@@ -153,8 +159,6 @@ class MySqlDatabaseUserStorage implements UserStorageInterface
         $statement = $this->db->prepare("
             UPDATE `users` SET `role` = '$roleSetter' WHERE `users`.`id` = '$id';
         ");
-
-         //$statement->bindValue(':role', $roleSetter);
 
         $statement->execute();
     }

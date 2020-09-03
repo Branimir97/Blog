@@ -7,6 +7,7 @@ class Post
 
     protected $id;
     protected $title;
+    protected $intro;
     protected $img_path;
     protected $content;
     protected $postedBy;
@@ -45,6 +46,22 @@ class Post
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIntro()
+    {
+        return $this->intro;
+    }
+
+    /**
+     * @param mixed $intro
+     */
+    public function setIntro($intro)
+    {
+        $this->intro = $intro;
     }
 
     /**

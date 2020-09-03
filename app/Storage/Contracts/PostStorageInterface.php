@@ -14,7 +14,7 @@ interface PostStorageInterface
 
     public function update(Post $post);
 
-    public function changeVisibility($id, $visibility);
+    public function changeVisibility($id);
 
     public function delete($id);
 }
