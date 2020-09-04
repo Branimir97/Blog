@@ -18,8 +18,8 @@ class MySqlDatabasePostStorage implements PostStorageInterface
     public function store(Post $post)
     {
         $statement = $this->db->prepare("
-            INSERT INTO posts(title, intro, img_path, content, postedBy, created)
-            VALUES (:title, :intro, :img_path, :content, :postedBy, :created)
+            INSERT INTO posts(title, intro, img_path, content, postedBy, created, visibility)
+            VALUES (:title, :intro, :img_path, :content, :postedBy, :created, :visibility)
         ");
 
         $statement->bindValue(':title', $post->getTitle());
@@ -27,12 +27,12 @@ class MySqlDatabasePostStorage implements PostStorageInterface
         $statement->bindValue(':img_path', $post->getImgPath());
         $statement->bindValue(':content', $post->getContent());
         $statement->bindValue(':postedBy', $post->getPostedBy());
-        $statement->bindValue(':created', $post->getCreated()->format(("Y-m-d H:i:s")));
-
+        $statement->bindValue(':created', $post->getCreated()->format("Y-m-d H:i:s"));
+        $statement->bindValue(':visibility', $post->getVisibility());
         $statement->execute();
 
         //$_SESSION['postCreated'] = 'Successfully created post.';
-        header("Location: /addNewPost");
+        header("Location: /adminPanel");
 
     }
 
@@ -68,9 +68,10 @@ class MySqlDatabasePostStorage implements PostStorageInterface
     public function get($id)
     {
         $statement = $this->db->prepare("
-            SELECT * FROM posts WHERE id = 1
+            SELECT * FROM posts WHERE id = :id
         ");
 
+        $statement->bindValue(":id", $id);
         $statement->setFetchMode(\PDO::FETCH_CLASS, Post::class);
         $statement->execute();
 
@@ -105,14 +106,26 @@ class MySqlDatabasePostStorage implements PostStorageInterface
 
     public function update(Post $post)
     {
+
+        $imgPath = $this->getImgPath($post->getId());
+
+        if ($imgPath !== $post->getImgPath()) {
+            unlink($imgPath);
+        }
+
         $statement = $this->db->prepare("
             UPDATE posts 
-            SET title = :title, content = :content
-            WHERE id = 1
+            SET title = :title, intro = :intro, img_path = :img_path, content = :content
+            WHERE id = :id
         ");
 
+        var_dump($post->getImgPath());
+
         $statement->bindValue(':title', $post->getTitle());
+        $statement->bindValue(':intro', $post->getIntro());
+        $statement->bindValue(':img_path', $post->getImgPath());
         $statement->bindValue(':content', $post->getContent());
+        $statement->bindValue(':id', $post->getId());
 
         $statement->execute();
 
@@ -122,45 +135,73 @@ class MySqlDatabasePostStorage implements PostStorageInterface
     public function changeVisibility($id)
     {
 
-        $statement1 = $this->db->prepare("
-            SELECT visibility
-            FROM posts
-            WHERE id = :id
-        ");
-
-
-        $statement1->bindValue(':id', $id);
-        $statement1->setFetchMode(\PDO::FETCH_CLASS, Post::class);
-        $statement1->execute();
-
-        $visibility = $statement1->fetch()->getVisibility();
+        $visibility = $this->getVisibility($id);
 
         $visibilityChecker = null;
 
-        if($visibility == 1)
-        {
+        if ($visibility == 1) {
             $visibilityChecker = 0;
-        } else
-        {
+        } else {
             $visibilityChecker = 1;
         }
 
-        $statement = $this->db->prepare("
-            UPDATE `posts` SET `visibility` = '$visibilityChecker' WHERE `posts`.`id` = '1';
+        $statementStoreVisibility = $this->db->prepare("
+            UPDATE posts
+            SET visibility = :visibility 
+            WHERE id = :id;
         ");
 
-        $statement->execute();
+        $statementStoreVisibility->bindValue(':visibility', $visibilityChecker);
+
+        $statementStoreVisibility->bindValue(':id', $id);
+
+        $statementStoreVisibility->execute();
 
     }
 
     public function delete($id)
     {
+
+        $imgPath = $this->getImgPath($id);
+
+        unlink($imgPath);
+
         $statement = $this->db->prepare("
             DELETE FROM posts WHERE id = '$id'
         ");
 
         $statement->execute();
 
+    }
+
+    public function getVisibility($id)
+    {
+        $statement = $this->db->prepare("
+            SELECT visibility
+            FROM posts
+            WHERE id = :id
+        ");
+
+        $statement->bindValue(':id', $id);
+        $statement->setFetchMode(\PDO::FETCH_CLASS, Post::class);
+        $statement->execute();
+
+        return $statement->fetch()->getVisibility();
+    }
+
+    public function getImgPath($id)
+    {
+        $statement = $this->db->prepare("
+            SELECT img_path 
+            FROM posts
+            WHERE id = '$id'
+        ");
+
+        $statement->setFetchMode(\PDO::FETCH_CLASS, Post::class);
+
+        $statement->execute();
+
+        return $statement->fetch()->getImgPath();
     }
 
 }

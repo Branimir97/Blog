@@ -54,6 +54,14 @@ class AddNewPostController extends View
                 $post->setIntro($_POST['intro']);
                 $post->setImgPath($imgPath);
                 $post->setContent($_POST['content']);
+
+                if(isset($_POST['post_visibility']))
+                {
+                    $post->setVisibility(0);
+                } else{
+                    $post->setVisibility(1);
+                }
+
                 $post->setPostedBy($_SESSION['loggedIn_fullName']);
                 $post->setCreated(new \DateTime(date_default_timezone_get()));
 

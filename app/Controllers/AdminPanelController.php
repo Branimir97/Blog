@@ -41,21 +41,12 @@ class AdminPanelController extends View
 
         $id = $_GET['id'];
         $this->postStorage->changeVisibility($id);
-        header("Location: /adminPanel");
-
     }
 
     public function deleteAction()
     {
-        if($_SERVER['REQUEST_METHOD'] === "POST")
-        {
-            if(isset($_POST['submit_delete']))
-            {
-                $id = $_POST['id'];
-
-                $this->postStorage->delete($id);
-            }
-        }
+        $id = $_GET['id'];
+        $this->postStorage->delete($id);
     }
 
 }

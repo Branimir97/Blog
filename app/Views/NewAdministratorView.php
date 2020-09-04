@@ -133,7 +133,6 @@
                 <p class="no_users mt-3">No registered users</p>
             <?php endif; ?>
             <h6 class="mt-3"><a href="/signup" class="btn btn-warning" role="button">Register new user</a></h6>
-
         </div>
     </div>
 </div>

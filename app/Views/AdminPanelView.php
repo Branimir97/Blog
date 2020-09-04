@@ -96,11 +96,7 @@
                     <?php endif; ?>
                 </td>
                 <td>
-                    <form action="editPost/edit" method="post">
-                        <input type="hidden" name="id" value="<?= $post->getId() ?>">
-                        <button type="submit" class="btn btn-success" name="submit_edit"><i class="far fa-edit"></i>
-                        </button>
-                    </form>
+                    <a href="editPost/edit?id=<?= $post->getId() ?>" role="button" class="btn btn-success"><i class="far fa-edit"></i></a>
                 </td>
                 <td>
                     <a role="button" class="btn btn-danger"
@@ -123,14 +119,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-
-                                    <form action="adminPanel/delete" method="post">
-                                        <input type="hidden" name="id" value="<?= $post->getId() ?>">
-                                        <button type="submit" class="btn btn-danger" name="submit_delete">
-                                            Delete</i>
-                                        </button>
-                                    </form>
-
+                                    <a href="adminPanel/delete?id=<?= $post->getId() ?>" role="button" class="btn btn-danger">Delete</a>
                                 </div>
                             </div>
                         </div>

@@ -45,9 +45,7 @@
     <?php endif; ?>
 
 
-    <form action="update" method="post" enctype="multipart/form-data">
-        <?= var_dump($postDetails); ?>
-       <input type="text" name="update_id" value="<?= $postDetails->getId()?>">
+    <form action="update?id=<?= $postDetails->getId()?>" method="post" enctype="multipart/form-data">
 
         <div class="form-group">
             <label for="title"></label>
@@ -79,7 +77,7 @@
             <small id="fileHelpId" class="form-text text-muted">Choose new photo, or just skip, old photo stays stored</small>
         </div>
 
-        <button type="submit" name="submit_update" class="btn btn-warning">Update post</button>
+        <button type="submit" name="submit_update" class="btn btn-warning mb-3">Edit post</button>
 
     </form>
 </div>

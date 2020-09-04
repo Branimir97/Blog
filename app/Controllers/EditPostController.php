@@ -36,37 +36,45 @@ class EditPostController extends View
 
     public function editAction()
     {
-        if($_SERVER['REQUEST_METHOD'] === "POST")
-        {
-            if(isset($_POST['submit_edit']))
-            {
-                $id = $_POST['id'];
+        $id = $_GET['id'];
 
-                $postStorage = new MySqlDatabasePostStorage($this->db);
-                return $postStorage->get($id);
-            }
-        }
-
+        $postStorage = new MySqlDatabasePostStorage($this->db);
+        return $postStorage->get($id);
     }
 
     public function updateAction()
     {
-        var_dump("BOK");
+
         if($_SERVER['REQUEST_METHOD'] === "POST")
         {
             if(isset($_POST['submit_update']))
             {
-                var_dump("NE");
-                $post = new Post();
 
-                $post->setId($this->postDetails->getId());
-                $post->setTitle($this->postDetails->getTitle());
-                $post->setContent($this->postDetails->getContent());
                 $postStorage = new MySqlDatabasePostStorage($this->db);
 
+                $post = new Post();
+
+                $post->setId($_GET['id']);
+
+                if($_FILES['post_image']['error'] !== UPLOAD_ERR_NO_FILE)
+                {
+                    $imgPath = $postStorage->constructImgPath($_FILES['post_image']);
+
+                    $post->setImgPath($imgPath);
+
+                    var_dump($imgPath);
+                }
+                else{
+                    $post->setImgPath($this->postDetails->getImgPath());
+                }
+
+                $post->setTitle($_POST['title']);
+                $post->setIntro($_POST['intro']);
+                $post->setContent($_POST['content']);
+
                 $postStorage->update($post);
+
             }
         }
     }
-
 }

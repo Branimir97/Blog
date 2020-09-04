@@ -33,7 +33,7 @@ class LoginController extends View
         if(isset($_SESSION['registered']))
         {
             $this->registered = $_SESSION['registered'];
-            unset($_SESSION['registered']);
+            unset($_SESSION['registeredT']);
         }
 
         try {

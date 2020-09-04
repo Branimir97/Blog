@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-    <title>Homepage</title>
+    <title>Blog</title>
 
     <style>
 
@@ -21,10 +21,6 @@
 
         a.login, a.adminPanel, a.logout {
             float: right;
-        }
-
-        .one_post {
-            cursor: pointer;
         }
 
         .one_post:nth-child(odd) {
@@ -57,11 +53,13 @@
     </style>
 </head>
 <body>
-<div class="jumbotron text-center bg-primary text-white mb-3">
-    <h1>Homepage</h1>
+<div class="jumbotron text-center p-2 bg-info text-white mb-3">
+    <h1><strong>BLOG</strong></h1>
 
     <?php
     if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
+
+        <p>You are logged in as <strong><?= $_SESSION['loggedIn_fullName']?></strong></p>
 
         <a role="button" class="btn btn-light logout" href="home/logout">Logout</a>
 
@@ -87,14 +85,19 @@
         <div class="one_post p-3 mb-3">
             <h4 class="p-3"><?= $post->getTitle() ?></h4>
             <div class="fake-img">
-                <img src="<?= $post->getImgPath() ?>">
+                <a href="/postDetails/getPost?id=<?=$post->getId()?>"><img src="<?= $post->getImgPath() ?>"></a>
             </div>
             <p class="postedBy p-2 mb-0">By: <strong><?= $post->getPostedBy() ?></strong>, <?= $post->getCreated() ?>
             </p>
             <div class="p-2">
                 <p class="content"><?= $post->getIntro() ?></p>
             </div>
-            <a class="btn btn-sm btn-info" href="/postDetails/get?id=<?=$post->getId()?>">READ MORE</a>
+            <a class="btn btn-sm btn-info" href="/postDetails/getPost?id=<?=$post->getId()?>">READ MORE</a>
+
+            <?php  if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
+            <a class="btn btn-sm btn-success" href="/postDetails/getPost?id=<?=$post->getId()?>#comments">COMMENT</a>
+            <?php endif; ?>
+
         </div>
     <?php endforeach; ?>
 

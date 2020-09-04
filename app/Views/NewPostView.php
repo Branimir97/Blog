@@ -20,6 +20,11 @@
         a.logout {
             float: right;
         }
+
+        span{
+            font-size: 11px;
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -74,7 +79,16 @@
             <small id="fileHelpId" class="form-text text-muted">Pick some good photo for your post</small>
         </div>
 
-        <button type="submit" name="submit" class="btn btn-success">Create new post</button>
+        <div class="form-check">
+            <label class="form-check-label mb-3">
+                <input type="checkbox" class="form-check-input" name="post_visibility" id="post_visibility">
+                Make your post invisible
+                <br>
+                <span><sup>*</sup> As default your post will be visible</span>
+            </label>
+        </div>
+
+        <button type="submit" name="submit" class="btn btn-success mb-3">Create new post</button>
 
     </form>
 </div>
