@@ -103,10 +103,10 @@
     </div>
 
     <p class="introduction mt-3">Introduction</p>
-    <h6 class=""><?= $postDetails->getIntro() ?></h6>
+    <h6 class=""><?= html_entity_decode($postDetails->getIntro()) ?></h6>
 
     <p class="introduction mt-3">Content</p>
-    <p><?= $postDetails->getContent() ?></p>
+    <p><?= html_entity_decode($postDetails->getContent()) ?></p>
 
     <div id="comments" class="mb-3">
 

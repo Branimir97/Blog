@@ -50,19 +50,19 @@
         <div class="form-group">
             <label for="title"></label>
             <input type="text" name="title" id="title" class="form-control"
-                   aria-describedby="helpId" value="<?=$postDetails->getTitle()?>">
+                   aria-describedby="helpId" value="<?= $postDetails->getTitle() ?>">
             <small id="helpId" class="text-muted">Write some good title here</small>
         </div>
 
         <div class="form-group">
             <label for="intro"></label>
-            <textarea class="form-control" name="intro" id="intro" placeholder="Post introduction" rows="3" required><?= $postDetails->getIntro()?></textarea>
+            <textarea class="form-control" name="intro" id="intro" placeholder="Post introduction" rows="3" required><?= html_entity_decode($postDetails->getIntro()) ?></textarea>
             <small id="helpId" class="text-muted">Write some good text to attract people open your post</small>
         </div>
 
         <div class="form-group">
             <label for="content"></label>
-            <textarea class="form-control" name="content" id="content" placeholder="Post content" rows="6" required><?= $postDetails->getContent()?></textarea>
+            <textarea class="form-control" name="content" id="content" placeholder="Post content" rows="6" required><?= html_entity_decode($postDetails->getContent()) ?></textarea>
             <small id="helpId" class="text-muted">Write some text for your post here</small>
         </div>
 

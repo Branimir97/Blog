@@ -23,9 +23,9 @@ class MySqlDatabasePostStorage implements PostStorageInterface
         ");
 
         $statement->bindValue(':title', $post->getTitle());
-        $statement->bindValue(':intro', $post->getIntro());
+        $statement->bindValue(':intro', htmlspecialchars($post->getIntro()));
         $statement->bindValue(':img_path', $post->getImgPath());
-        $statement->bindValue(':content', $post->getContent());
+        $statement->bindValue(':content', htmlspecialchars($post->getContent()));
         $statement->bindValue(':postedBy', $post->getPostedBy());
         $statement->bindValue(':created', $post->getCreated()->format("Y-m-d H:i:s"));
         $statement->bindValue(':visibility', $post->getVisibility());

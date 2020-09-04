@@ -14,7 +14,6 @@ class MySqlDatabaseCommentStorage implements CommentStorageInterface
         $this->db = $db;
     }
 
-
     public function store(Comment $comment)
     {
         $statement = $this->db->prepare("
