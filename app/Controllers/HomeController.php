@@ -45,4 +45,6 @@ class HomeController extends View
         session_destroy();
         header("Location: /");
     }
+
+
 }

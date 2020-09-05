@@ -18,6 +18,11 @@
 
     <style>
 
+        *
+        {
+            font-family: "Ubuntu Condensed", sans-serif;
+        }
+
         .container {
             width: 800px;
         }
@@ -73,13 +78,13 @@
 </head>
 <body>
 
-<div class="jumbotron p-2 text-center text-white bg-info">
+<div class="jumbotron pt-3 pb-3 text-center text-white bg-info">
     <h1><strong>BLOG</strong></h1>
 
     <?php
     if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
 
-        <p>You are logged in as <strong><?= $_SESSION['loggedIn_fullName'] ?></strong></p>
+        <p>You are logged in as <strong><?= $_SESSION['loggedIn_username'] ?></strong></p>
 
         <a role="button" class="btn btn-light logout" href="home/logout">Logout</a>
 
@@ -97,7 +102,7 @@
     <a href="/home"><i class="fas fa-long-arrow-alt-left"></i> Go back to homepage</a>
 
 
-    <h1 class="text-center title"><?= $postDetails->getTitle() ?></h1>
+    <h1 class="text-center title mt-3"><?= $postDetails->getTitle() ?></h1>
     <div class="fake-img">
         <img src="<?= '../' . $postDetails->getImgPath() ?>">
     </div>

@@ -17,8 +17,12 @@
     <title>Admin Panel</title>
 
     <style>
-        a.logout, a.home
-        {
+
+        * {
+            font-family: "Ubuntu Condensed", sans-serif;
+        }
+
+        a.logout, a.profile, a.home {
             float: right;
         }
 
@@ -35,101 +39,109 @@
     </style>
 </head>
 <body>
-<div class="jumbotron text-center text-white bg-info">
+<div class="jumbotron text-center text-white bg-danger pt-3 pb-3">
     <h1><strong>ADMIN PANEL</strong></h1>
 
     <?php
     if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
 
-        <p>You are logged in as <strong><?= $_SESSION['loggedIn_fullName']?></strong></p>
+        <p>You are logged in as <strong><?= $_SESSION['loggedIn_username'] ?></strong></p>
 
-        <a role="button" class="btn btn-light logout" href="/home/logout">Logout</a>
-        <a role="button" class="btn btn-success home" href="/home">Homepage</a>
+        <a role="button" class="btn btn-secondary logout" href="/home/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
+
+        <a role="button" class="btn btn-secondary home mr-1" href="/home"><i class="fas fa-house-damage"></i>
+            Homepage</a>
 
     <?php endif; ?>
 
 </div>
 
 <div class="container-fluid">
-    <a role="button" class="btn btn-info" href="/addNewPost">Create new post</a>
-    <a role="button" class="btn btn-primary" href="/addNewAdministrator">Add new administrator</a>
+    <a role="button" class="btn btn-success" href="/addNewPost">Create new post</a>
+    <a role="button" class="btn btn-info" href="/addNewAdministrator">Add new administrator</a>
 
-    <?php if($posts == null):?>
+    <?php if ($posts == null): ?>
 
-        <h6 class="mt-3 p-3 text-center">There are currently no posts. Here you can <a href="/addNewPost">create</a> first post for our Blog!</h6>
+        <h6 class="mt-3 p-3 text-center">There are currently no posts. Here you can <a href="/addNewPost">create</a>
+            first post for our Blog!</h6>
 
     <?php else: ?>
 
 
-    <table class="table text-center mt-3">
-        <caption>List of active posts</caption>
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Title</th>
-            <th>Image thumbnail</th>
-            <th>Posted by</th>
-            <th>Created at</th>
-            <th>Visibility</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($posts as $post): ?>
+        <table class="table text-center mt-3">
+            <caption>List of active posts</caption>
+            <thead>
             <tr>
-                <td><?= $post->getId() ?></td>
-                <td><?= $post->getTitle() ?></td>
-                <td><a href="<?= $post->getImgPath() ?>" target="_blank"><img src="<?= $post->getImgPath() ?>"></a></td>
-                <td>Administrator <strong><?= $post->getPostedBy() ?></strong></td>
-                <td><?= $post->getCreated() ?></td>
-                <td>
+                <th>#</th>
+                <th>Title</th>
+                <th>Image thumbnail</th>
+                <th>Posted by</th>
+                <th>Created at</th>
+                <th>Visibility</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($posts as $post): ?>
+                <tr>
+                    <td><?= $post->getId() ?></td>
+                    <td><?= $post->getTitle() ?></td>
+                    <td><a href="<?= $post->getImgPath() ?>" target="_blank"><img src="<?= $post->getImgPath() ?>"></a>
+                    </td>
+                    <td>Administrator <strong><?= $post->getPostedBy() ?></strong></td>
+                    <td><?= $post->getCreated() ?></td>
+                    <td>
+                        <?php if ($post->getVisibility() == 1): ?>
+                            <a href="adminPanel/changeVisibility?id=<?= $post->getId() ?>">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                        <?php else: ?>
+                            <a href="adminPanel/changeVisibility?id=<?= $post->getId() ?>">
+                                <i class="fas fa-eye-slash"></i>
+                            </a>
+                        <?php endif; ?>
+                    </td>
+                    <td>
+                        <a href="editPost/edit?id=<?= $post->getId() ?>" role="button" class="btn btn-success"><i
+                                    class="far fa-edit"></i></a>
+                    </td>
+                    <td>
+                        <a role="button" class="btn btn-danger"
+                           data-toggle="modal" data-target="#exampleModalCenter">
+                            <i class="far fa-trash-alt"></i></a>
 
-                    <?php if($post->getVisibility() == 1): ?>
-                        <a href="adminPanel/changeVisibility?id=<?= $post->getId() ?>">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                    <?php  else:?>
-                        <a href="adminPanel/changeVisibility?id=<?= $post->getId() ?>">
-                            <i class="fas fa-eye-slash"></i>
-                        </a>
-                    <?php endif; ?>
-                </td>
-                <td>
-                    <a href="editPost/edit?id=<?= $post->getId() ?>" role="button" class="btn btn-success"><i class="far fa-edit"></i></a>
-                </td>
-                <td>
-                    <a role="button" class="btn btn-danger"
-                       data-toggle="modal" data-target="#exampleModalCenter">
-                        <i class="far fa-trash-alt"></i></a>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">Deleting post "<?= $post->getTitle() ?>"</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Are you sure you want to delete this post?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <a href="adminPanel/delete?id=<?= $post->getId() ?>" role="button" class="btn btn-danger">Delete</a>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <?php var_dump($post); ?>
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Deleting post
+                                            "<?= $post->getTitle() ?>"</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to delete this post?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
+                                        </button>
+                                        <a href="adminPanel/delete?id=<?= $post->getId() ?>" role="button"
+                                           class="btn btn-danger">Delete</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
-    <?php endif;?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
 </div>
 
 
@@ -144,6 +156,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
-</body>
 </body>
 </html>

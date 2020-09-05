@@ -16,20 +16,31 @@
 
 
     <title>Sign up</title>
+
+    <style>
+
+        *
+        {
+            font-family: "Ubuntu Condensed", sans-serif;
+        }
+
+    </style>
 </head>
 <body>
 
-    <div class="jumbotron text-center p-3 bg-light mb-3">
-        <h1>Sign up</h1>
-        <a href="/login"><i class="fas fa-long-arrow-alt-left"></i> Go back to login</a>
+    <div class="jumbotron text-center text-white bg-secondary pt-3 pb-3">
+        <h1><strong>SIGN UP </strong><i class="fas fa-user-plus"></i></h1>
     </div>
 
     <?php if(isset($error)):?>
 
-        <div class="text-center bg-danger p-3 text-white"><strong><?= $error;?></strong></div>
+        <div class="text-center bg-danger p-3 mb-3 text-white"><strong><?= $error;?></strong></div>
 
     <?php endif; ?>
     <div class="container">
+
+        <a href="/login"><i class="fas fa-long-arrow-alt-left"></i> Go back to login page</a>
+
         <form action="signup/create" method="post">
 
             <div class="form-group">
@@ -62,7 +73,7 @@
                 <small id="helpId" class="text-muted">Here you need to enter some good password</small>
             </div>
 
-            <button type="submit" name="submit" class="btn btn-primary">Register</button>
+            <button type="submit" name="submit" class="btn btn-primary">Sign up</button>
         </form>
     </div>
 

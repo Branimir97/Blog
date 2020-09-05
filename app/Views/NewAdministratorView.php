@@ -15,9 +15,10 @@
     <script src="https://kit.fontawesome.com/6aa1bd9ffa.js" crossorigin="anonymous"></script>
 
     <title>Add new administrator</title>
+
     <style>
-        a.logout {
-            float: right;
+        * {
+            font-family: "Ubuntu Condensed", sans-serif;
         }
 
         p.no_admins, p.no_users {
@@ -25,8 +26,7 @@
             color: darkred;
         }
 
-        strong#disablePrivilegie
-        {
+        strong#disablePrivilegie {
             color: red;
         }
 
@@ -34,15 +34,13 @@
 </head>
 <body>
 
-<div class="jumbotron text-center text-white bg-info">
+<div class="jumbotron text-center text-white bg-info pt-3 pb-3">
     <h1><strong>ADD NEW ADMINISTRATOR</strong></h1>
 
     <?php
     if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
 
-        <p>You are logged in as <strong><?= $_SESSION['loggedIn_fullName']?></strong></p>
-
-        <a role="button" class="btn btn-light logout" href="/home/logout">Logout</a>
+        <p>You are logged in as <strong><?= $_SESSION['loggedIn_username'] ?></strong></p>
 
     <?php endif; ?>
 
@@ -60,36 +58,36 @@
             <?php
             if ($admins != null): ?>
                 <table class="table">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Account created at</th>
-                    <th>Remove privilegie</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php foreach ($admins as $admin): ?>
+                    <thead>
                     <tr>
-                        <td><?= $admin->getUsername(); ?></td>
-                        <td><?= $admin->getCreated(); ?></td>
-                        <td>
-
-                            <?php if($admin->getUsername() !== $_SESSION['loggedIn_username'] ): ?>
-                            <form action="/addNewAdministrator/changeRole" method="post">
-                                <input type="hidden" name="id" value="<?= $admin->getId();?>">
-                                <input type="hidden" name="role" value="admin">
-                                <button type="submit" class="btn btn-danger" name="submit_changeRole">
-                                    Unset admin <i class="fas fa-user-cog"></i>
-                                </button>
-                            </form>
-
-                            <?php else: ?>
-                                <h6><strong id="disablePrivilegie">Currently logged in</strong></h6>
-                            <?php endif; ?>
-                        </td>
+                        <th>Name</th>
+                        <th>Account created at</th>
+                        <th>Remove privilegie</th>
                     </tr>
-                <?php endforeach;?>
-                </tbody>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($admins as $admin): ?>
+                        <tr>
+                            <td><?= $admin->getUsername(); ?></td>
+                            <td><?= $admin->getCreated(); ?></td>
+                            <td>
+
+                                <?php if ($admin->getUsername() !== $_SESSION['loggedIn_username']): ?>
+                                    <form action="/addNewAdministrator/changeRole" method="post">
+                                        <input type="hidden" name="id" value="<?= $admin->getId(); ?>">
+                                        <input type="hidden" name="role" value="admin">
+                                        <button type="submit" class="btn btn-danger" name="submit_changeRole">
+                                            Unset admin <i class="fas fa-user-cog"></i>
+                                        </button>
+                                    </form>
+
+                                <?php else: ?>
+                                    <h6><strong id="disablePrivilegie">Currently logged in</strong></h6>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
                 </table>
             <?php else:
                 ?>
@@ -103,30 +101,30 @@
             <?php
             if ($users != null): ?>
                 <table class="table">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Account created at</th>
-                    <th>Add privilegie</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php foreach ($users as $user): ?>
+                    <thead>
                     <tr>
-                        <td><?= $user->getUsername(); ?></td>
-                        <td><?= $user->getCreated(); ?></td>
-                        <td>
-                            <form action="/addNewAdministrator/changeRole" method="post">
-                                <input type="hidden" name="id" value="<?= $user->getId();?>">
-                                <input type="hidden" name="role" value="user">
-                                <button type="submit" class="btn btn-success" name="submit_changeRole">
-                                    Set admin <i class="fas fa-user-cog"></i>
-                                </button>
-                            </form>
-                        </td>
+                        <th>Name</th>
+                        <th>Account created at</th>
+                        <th>Add privilegie</th>
                     </tr>
-                <?php endforeach;?>
-                </tbody>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($users as $user): ?>
+                        <tr>
+                            <td><?= $user->getUsername(); ?></td>
+                            <td><?= $user->getCreated(); ?></td>
+                            <td>
+                                <form action="/addNewAdministrator/changeRole" method="post">
+                                    <input type="hidden" name="id" value="<?= $user->getId(); ?>">
+                                    <input type="hidden" name="role" value="user">
+                                    <button type="submit" class="btn btn-success" name="submit_changeRole">
+                                        Set admin <i class="fas fa-user-cog"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
                 </table>
             <?php else:
                 ?>

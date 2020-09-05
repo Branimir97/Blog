@@ -17,38 +17,37 @@
     <title>Create new post</title>
 
     <style>
-        a.logout {
-            float: right;
+        * {
+            font-family: "Ubuntu Condensed", sans-serif;
         }
 
-        span{
+        span {
             font-size: 11px;
             color: red;
         }
     </style>
 </head>
 <body>
-<div class="jumbotron text-center text-white bg-info">
+<div class="jumbotron text-center text-white bg-success pt-3 pb-3">
     <h1><strong>CREATE NEW POST</strong></h1>
+
     <?php
     if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
-        <p>You are logged in as <strong><?= $_SESSION['loggedIn_fullName']?></strong></p>
 
-        <a role="button" class="btn btn-light logout" href="/home/logout">Logout</a>
+        <p>You are logged in as <strong><?= $_SESSION['loggedIn_username'] ?></strong></p>
 
     <?php endif; ?>
+
 </div>
 
 <div class="container">
     <a href="/adminPanel"><i class="fas fa-long-arrow-alt-left"></i> Go back to admin panel</a>
 
     <?php if (isset($error)): ?>
-
         <div class="text-center bg-danger p-3 text-white"><?= $error; ?></div>
-
     <?php endif; ?>
 
-    <?php if(isset($postCreated)): ?>
+    <?php if (isset($postCreated)): ?>
         <div class="text-center bg-success p-3 text-white"><?= $postCreated; ?></div>
     <?php endif; ?>
 
@@ -63,19 +62,22 @@
 
         <div class="form-group">
             <label for="intro"></label>
-            <textarea class="form-control" name="intro" id="intro" placeholder="Post introduction" rows="3" required></textarea>
+            <textarea class="form-control" name="intro" id="intro" placeholder="Post introduction" rows="3"
+                      required></textarea>
             <small id="helpId" class="text-muted">Write some good text to attract people open your post</small>
         </div>
 
         <div class="form-group">
             <label for="content"></label>
-            <textarea class="form-control" name="content" id="content" placeholder="Post content" rows="6" required></textarea>
+            <textarea class="form-control" name="content" id="content" placeholder="Post content" rows="6"
+                      required></textarea>
             <small id="helpId" class="text-muted">Write some text for your post here</small>
         </div>
 
         <div class="form-group">
             <label for="post_image"></label>
-            <input type="file" class="form-control-file" name="post_image" id="post_image" aria-describedby="fileHelpId" required>
+            <input type="file" class="form-control-file" name="post_image" id="post_image" aria-describedby="fileHelpId"
+                   required>
             <small id="fileHelpId" class="form-text text-muted">Pick some good photo for your post</small>
         </div>
 
@@ -105,6 +107,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
-</body>
 </body>
 </html>

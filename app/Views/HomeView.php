@@ -11,15 +11,24 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
+    <!-- FontAwesome -->
+    <script src="https://kit.fontawesome.com/6aa1bd9ffa.js" crossorigin="anonymous"></script>
+
     <title>Blog</title>
 
     <style>
 
-        .container {
-            width: 600px;
+        *
+        {
+            font-family: "Ubuntu Condensed", sans-serif;
         }
 
-        a.login, a.adminPanel, a.logout {
+        .container
+        {
+            width: 700px;
+        }
+
+        a.login, a.adminPanel, a.logout, a.profile{
             float: right;
         }
 
@@ -46,38 +55,47 @@
             float: left;
         }
 
-        .content {
+        .intro {
             clear: left;
         }
+
 
     </style>
 </head>
 <body>
-<div class="jumbotron text-center p-2 bg-info text-white mb-3">
+<div class="jumbotron text-center bg-info text-white pt-3 pb-3">
     <h1><strong>BLOG</strong></h1>
 
     <?php
     if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
 
-        <p>You are logged in as <strong><?= $_SESSION['loggedIn_fullName']?></strong></p>
+        <p>You are logged in as <strong><?= $_SESSION['loggedIn_username']?></strong></p>
 
-        <a role="button" class="btn btn-light logout" href="home/logout">Logout</a>
+        <a role="button" class="btn btn-secondary logout" href="home/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
+
+        <a role="button" class="btn btn-secondary profile mr-1" href="/profile">My profile <i class="fas fa-user-cog"></i></a>
+
 
         <?php if (isset($_SESSION['admin_loggedIn']) && $_SESSION['admin_loggedIn'] == true): ?>
-            <a href="/adminPanel" class="btn btn-danger adminPanel" role="button">Admin panel</a>
+
+            <a href="/adminPanel" class="btn btn-danger adminPanel mr-1" role="button">Admin panel <i class="fas fa-users-cog"></i></a>
+
         <?php endif; ?>
+
     <?php else: ?>
 
-        <a role="button" class="btn btn-light login" href="/login">Login</a>
+        <a role="button" class="btn btn-secondary login" href="/login">Login <i class="fas fa-sign-in-alt"></i></a>
+
     <?php endif; ?>
 
 
 </div>
 <div class="container">
+    <div class="container">
 
     <?php if ($posts == null): ?>
 
-        <h6 class="mt-3 p-3 text-center">There are no posts on our Blog at the moment. Please check later.</h6>
+        <h6 class="mt-3 p-3 text-center">There are currently no posts on our Blog. Please check back later.</h6>
 
     <?php endif; ?>
 
@@ -90,7 +108,7 @@
             <p class="postedBy p-2 mb-0">By: <strong><?= $post->getPostedBy() ?></strong>, <?= $post->getCreated() ?>
             </p>
             <div class="p-2">
-                <p class="content"><?= $post->getIntro() ?></p>
+                <p class="intro"><?= html_entity_decode($post->getIntro()) ?></p>
             </div>
             <a class="btn btn-sm btn-info" href="/postDetails/getPost?id=<?=$post->getId()?>">READ MORE</a>
 
@@ -100,7 +118,7 @@
 
         </div>
     <?php endforeach; ?>
-
+    </div>
 </div>
 
 <!-- Optional JavaScript -->

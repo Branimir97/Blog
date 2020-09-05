@@ -15,12 +15,20 @@
     <script src="https://kit.fontawesome.com/6aa1bd9ffa.js" crossorigin="anonymous"></script>
 
     <title>Login</title>
+
+    <style>
+
+        *
+        {
+            font-family: "Ubuntu Condensed", sans-serif;
+        }
+
+    </style>
 </head>
 <body>
 
-<div class="jumbotron text-center p-3 bg-light mb-3">
-    <h1>Login</h1>
-    <a href="/"><i class="fas fa-long-arrow-alt-left"></i> Go back to homepage</a>
+<div class="jumbotron text-white text-center bg-secondary pt-3 pb-3">
+    <h1><strong>LOGIN </strong><i class="fas fa-sign-in-alt"></i></h1>
 </div>
 
 <?php
@@ -32,11 +40,14 @@ if (isset($registered)):
 
 <?php if (isset($error)): ?>
 
-    <div class="text-center bg-danger p-3 text-white"><?= $error; ?></div>
+    <div class="text-center bg-danger p-3 text-white mb-3"><?= $error; ?></div>
 
 <?php endif; ?>
 
 <div class="container">
+
+    <a href="/"><i class="fas fa-long-arrow-alt-left"></i> Go back to homepage</a>
+
     <form action="login/authenticate" method="post">
 
         <div class="form-group">
@@ -55,7 +66,7 @@ if (isset($registered)):
 
         <div class="form-check">
             <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue">
+                <input type="checkbox" class="form-check-input" name="remember_me" value="checkedValue">
                 Remember me
             </label>
         </div>

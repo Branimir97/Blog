@@ -108,6 +108,11 @@ class MySqlDatabaseUserStorage implements UserStorageInterface
                 }
             }
             if ($pass && $correct_username) {
+
+                if(isset($_POST['remember_me']))
+                {
+                    //Kod za cookie
+                }
                 $_SESSION['loggedIn'] = true;
 
                 if ($is_admin) {
@@ -161,6 +166,38 @@ class MySqlDatabaseUserStorage implements UserStorageInterface
         ");
 
         $statement->execute();
+    }
+
+    public function get($username)
+    {
+        $statement = $this->db->prepare("
+            SELECT * FROM users
+            WHERE username = :username
+        ");
+
+        $statement->bindValue(':username', $username);
+
+        $statement->setFetchMode(\PDO::FETCH_CLASS, User::class);
+
+        $statement->execute();
+
+        return $statement->fetch();
+    }
+
+    public function delete($username)
+    {
+        $statement = $this->db->prepare("
+            DELETE FROM users
+            WHERE username = :username
+        ");
+
+        $statement->bindValue(':username', $username);
+
+        $statement->execute();
+
+        session_unset();
+        session_destroy();
+        header('/home');
     }
 
 }

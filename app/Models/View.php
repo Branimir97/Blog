@@ -11,7 +11,7 @@ class View
         $file_name = 'Views/'.$file . '.php';
         if(!file_exists($file_name))
         {
-            throw new TemplateNotFoundException('File '.$file . ' not found!');
+            throw new TemplateNotFoundException('Template "'.$file . '" not found!');
         }
 
         ob_start();

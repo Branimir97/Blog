@@ -13,4 +13,8 @@ interface UserStorageInterface
     public function all($role);
 
     public function changeRole($id, $role);
+
+    public function get($username);
+
+    public function delete($username);
 }
