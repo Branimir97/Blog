@@ -1,5 +1,5 @@
 <?php
-if(!isset($_SESSION['loggedIn_username']))
+if (!isset($_SESSION['loggedIn_username']))
 
     return new \Controllers\Controller404();
 
@@ -13,6 +13,8 @@ if(!isset($_SESSION['loggedIn_username']))
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="icon" href="Uploaded_images/logo.png">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -34,7 +36,7 @@ if(!isset($_SESSION['loggedIn_username']))
     <h1><strong>EDIT POST</strong></h1>
     <?php
     if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
-        <p>You are logged in as <strong><?= $_SESSION['loggedIn_fullName']?></strong></p>
+        <p>You are logged in as <strong><?= $_SESSION['loggedIn_fullName'] ?></strong></p>
 
         <a role="button" class="btn btn-light logout" href="/home/logout">Logout</a>
 
@@ -52,7 +54,7 @@ if(!isset($_SESSION['loggedIn_username']))
     <?php endif; ?>
 
 
-    <form action="update?id=<?= $postDetails->getId()?>" method="post" enctype="multipart/form-data">
+    <form action="update?id=<?= $postDetails->getId() ?>" method="post" enctype="multipart/form-data">
 
         <div class="form-group">
             <label for="title"></label>
@@ -63,29 +65,35 @@ if(!isset($_SESSION['loggedIn_username']))
 
         <div class="form-group">
             <label for="intro"></label>
-            <textarea class="form-control" name="intro" id="intro" placeholder="Post introduction" rows="3" required><?= html_entity_decode($postDetails->getIntro()) ?></textarea>
+            <textarea class="form-control" name="intro" id="intro" placeholder="Post introduction" rows="3"
+                      required><?= html_entity_decode($postDetails->getIntro()) ?></textarea>
             <small id="helpId" class="text-muted">Write some good text to attract people open your post</small>
         </div>
 
         <div class="form-group">
             <label for="content"></label>
-            <textarea class="form-control" name="content" id="content" placeholder="Post content" rows="6" required><?= html_entity_decode($postDetails->getContent()) ?></textarea>
+            <textarea class="form-control" name="content" id="content" placeholder="Post content" rows="6"
+                      required><?= html_entity_decode($postDetails->getContent()) ?></textarea>
             <small id="helpId" class="text-muted">Write some text for your post here</small>
         </div>
 
         <div>
             <h6>Current photo</h6>
-            <img src="<?$postDetails->getImgPath()?>">
-            <?php echo $postDetails->getImgPath()?>
+            <img src="<? $postDetails->getImgPath() ?>">
+            <?php echo $postDetails->getImgPath() ?>
         </div>
         <div class="form-group">
             <label for="post_image"></label>
-            <input type="file" class="form-control-file" name="post_image" id="post_image" aria-describedby="fileHelpId">
-            <small id="fileHelpId" class="form-text text-muted">Choose new photo, or just skip, old photo stays stored</small>
+            <input type="file" class="form-control-file" name="post_image" id="post_image"
+                   aria-describedby="fileHelpId">
+            <small id="fileHelpId" class="form-text text-muted">Choose new photo, or just skip, old photo stays
+                stored</small>
         </div>
 
         <button type="submit" name="submit_update" class="btn btn-warning mb-3">Edit post</button>
-        <button type="submit" name="submit_delete" formaction="delete?id=<?= $postDetails->getId()?>" class="btn btn-danger mb-3">Delete post</button>
+        <button type="submit" name="submit_delete" formaction="delete?id=<?= $postDetails->getId() ?>"
+                class="btn btn-danger mb-3">Delete post
+        </button>
     </form>
 </div>
 

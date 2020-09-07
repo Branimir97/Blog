@@ -45,7 +45,6 @@ class ChangePasswordController extends View
 
                 $newPassword2 = $_POST['new_password2'];
 
-
                 $userStorage = new MySqlDatabaseUserStorage($this->db);
 
                 $userStorage->changePassword($oldPassword, $newPassword, $newPassword2);

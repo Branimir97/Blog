@@ -1,5 +1,5 @@
 <?php
-if(!isset($_SESSION['loggedIn_username']))
+if (!isset($_SESSION['loggedIn_username']))
 
     return new \Controllers\Controller404();
 
@@ -14,6 +14,8 @@ if(!isset($_SESSION['loggedIn_username']))
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <link rel="icon" href="Uploaded_images/logo.png">
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -25,13 +27,11 @@ if(!isset($_SESSION['loggedIn_username']))
 
     <style>
 
-        *
-        {
+        * {
             font-family: "Ubuntu Condensed", sans-serif;
         }
 
-        .one_comment strong
-        {
+        .one_comment strong {
             color: darkblue;
         }
 
@@ -46,7 +46,7 @@ if(!isset($_SESSION['loggedIn_username']))
     <?php
     if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
 
-        <p>You are logged in as <strong><?= $_SESSION['loggedIn_username']?></strong></p>
+        <p>You are logged in as <strong><?= $_SESSION['loggedIn_username'] ?></strong></p>
 
     <?php endif; ?>
 
@@ -62,33 +62,32 @@ if(!isset($_SESSION['loggedIn_username']))
 
     <a href="/adminPanel"><i class="fas fa-long-arrow-alt-left"></i> Go back to admin panel</a>
 
-    <?php if(isset($comments)):
+    <?php if (isset($comments)):
         foreach ($comments as $comment): ?>
-        <div class="one_comment bg-info text-center">
+            <div class="one_comment bg-info text-center">
 
-            <h5 class="mt-3 text-center p-2"><?= $comment->getContent(); ?></h5>
-            <p class="mt-3 mb-1 text-center">
-                Posted by:
-                <strong>
-                    <?= $comment->getPostedBy(); ?>
-                </strong>
-                at
-                <strong>
-                    <?= $comment->getCreated(); ?>
-                </strong>
-            </p>
-            <a href="delete?id=<?= $comment->getId() ?>" class="btn btn-danger m-1" role="button">
-                Delete comment <i class="fas fa-trash-alt"></i>
-            </a>
-        </div>
+                <h5 class="mt-3 text-center p-2"><?= $comment->getContent(); ?></h5>
+                <p class="mt-3 mb-1 text-center">
+                    Posted by:
+                    <strong>
+                        <?= $comment->getPostedBy(); ?>
+                    </strong>
+                    at
+                    <strong>
+                        <?= $comment->getCreated(); ?>
+                    </strong>
+                </p>
+                <a href="delete?id=<?= $comment->getId() ?>" class="btn btn-danger m-1" role="button">
+                    Delete comment <i class="fas fa-trash-alt"></i>
+                </a>
+            </div>
 
-    <?php endforeach;
-        if($comments == null): ?>
-        <h6 class="mt-3 text-center">There are no comments for this post.</h6>
-    <?php endif; ?>
+        <?php endforeach;
+        if ($comments == null): ?>
+            <h6 class="mt-3 text-center">There are no comments for this post.</h6>
+        <?php endif; ?>
     <?php endif; ?>
 </div>
-
 
 
 <!-- Optional JavaScript -->

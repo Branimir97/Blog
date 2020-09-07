@@ -7,6 +7,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <link rel="icon" href="Uploaded_images/logo.png">
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -105,7 +107,14 @@
             <div class="fake-img">
                 <a href="/postDetails/getPost?id=<?=$post->getId()?>"><img src="<?= $post->getImgPath() ?>"></a>
             </div>
-            <p class="postedBy p-2 mb-0">By: <strong><?= $post->getPostedBy() ?></strong>, <?= $post->getCreated() ?>
+
+            <?php
+            $mysqldate = $post->getCreated();
+            $phpdate = strtotime($mysqldate);
+            $myDateFormat = date('d. M Y. H:i:s', $phpdate);
+            ?>
+
+            <p class="postedBy p-2 mb-0">By: <strong><?= $post->getPostedBy() ?></strong>, <?= $myDateFormat ?>
             </p>
             <div class="p-2">
                 <p class="intro"><?= html_entity_decode($post->getIntro()) ?></p>

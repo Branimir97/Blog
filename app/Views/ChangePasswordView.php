@@ -1,5 +1,5 @@
 <?php
-if(!isset($_SESSION['loggedIn_username']))
+if (!isset($_SESSION['loggedIn_username']))
 
     return new \Controllers\Controller404();
 
@@ -13,6 +13,8 @@ if(!isset($_SESSION['loggedIn_username']))
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <link rel="icon" href="Uploaded_images/logo.png">
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -24,8 +26,7 @@ if(!isset($_SESSION['loggedIn_username']))
 
     <style>
 
-        *
-        {
+        * {
             font-family: "Ubuntu Condensed", sans-serif;
         }
 
@@ -40,7 +41,7 @@ if(!isset($_SESSION['loggedIn_username']))
     <?php
     if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
 
-        <p>You are logged in as <strong><?= $_SESSION['loggedIn_username']?></strong></p>
+        <p>You are logged in as <strong><?= $_SESSION['loggedIn_username'] ?></strong></p>
 
     <?php endif; ?>
 
@@ -60,26 +61,28 @@ if(!isset($_SESSION['loggedIn_username']))
 
         <div class="form-group">
             <label for="old_password"></label>
-            <input type="password" name="old_password" id="old_password" class="form-control" placeholder="Current password" aria-describedby="helpId" required>
+            <input type="password" name="old_password" id="old_password" class="form-control"
+                   placeholder="Current password" aria-describedby="helpId" required>
             <small id="helpId" class="text-muted">Enter your current password</small>
         </div>
 
         <div class="form-group">
             <label for="new_password"></label>
-            <input type="password" name="new_password" id="new_password" class="form-control" placeholder="New password" aria-describedby="helpId" required>
+            <input type="password" name="new_password" id="new_password" class="form-control" placeholder="New password"
+                   aria-describedby="helpId" required>
             <small id="helpId" class="text-muted">Enter new password</small>
         </div>
 
         <div class="form-group">
             <label for="new_password2"></label>
-            <input type="password" name="new_password2" id="new_password2" class="form-control" placeholder="New password once more" aria-describedby="helpId" required>
+            <input type="password" name="new_password2" id="new_password2" class="form-control"
+                   placeholder="New password once more" aria-describedby="helpId" required>
             <small id="helpId" class="text-muted">Enter new password one more time</small>
         </div>
 
         <button type="submit" name="submit_password" class="btn btn-primary">Change password</button>
     </form>
 </div>
-
 
 
 <!-- Optional JavaScript -->

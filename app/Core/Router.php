@@ -20,8 +20,7 @@ class Router
 
         $urlParts = explode('/', $url);
 
-        if(count($urlParts) > 4)
-        {
+        if (count($urlParts) > 4) {
             return new Controller404();
         }
 
@@ -35,16 +34,13 @@ class Router
         }
         if (isset($urlParts[2])) {
 
-                if(strpos($urlParts[2], '?'))
-                {
-                    $explodedGetQuery = explode('?', $urlParts[2]);
-                    $getQuery ='?'. $explodedGetQuery[1];
-                    $viewAction=rtrim($urlParts[2], $getQuery) . 'Action';
-                }
-                else
-                {
-                    $viewAction = $urlParts[2].'Action';
-                }
+            if (strpos($urlParts[2], '?')) {
+                $explodedGetQuery = explode('?', $urlParts[2]);
+                $getQuery = '?' . $explodedGetQuery[1];
+                $viewAction = rtrim($urlParts[2], $getQuery) . 'Action';
+            } else {
+                $viewAction = $urlParts[2] . 'Action';
+            }
         }
 
         $controllerFile = 'Controllers/' . ucfirst($controller) . 'Controller' . '.php';
@@ -64,10 +60,8 @@ class Router
 
                 if (!in_array($viewAction, $controllerMethods)) {
                     return new Controller404();
-                }
-                else
-                {
-                $controllerClass->$viewAction();
+                } else {
+                    $controllerClass->$viewAction();
 
                 }
 

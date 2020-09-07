@@ -107,6 +107,12 @@ class MySqlDatabaseUserStorage implements UserStorageInterface
 
         $users = $statement->fetchAll();
 
+        if(empty($users))
+        {
+            $_SESSION['error'] = 'You are the first user, sign up first!';
+            header("Location: /login");
+        }
+
         foreach ($users as $user_db) {
             $correct_password = password_verify($user->getPassword(), $user_db->password);
 
@@ -188,12 +194,18 @@ class MySqlDatabaseUserStorage implements UserStorageInterface
         }
 
         $statement = $this->db->prepare("
-            UPDATE `users` SET `role` = '$roleSetter' WHERE `users`.`id` = '$id';
+            UPDATE users 
+            SET role = :role 
+            WHERE id = :id
         ");
 
-        $statement->execute();
+         $statement->bindValue(':role', $roleSetter);
+         $statement->bindValue(':id', $id);
 
+        $statement->execute();
         header("Location: /addNewAdministrator");
+
+
     }
 
     public function get($username)

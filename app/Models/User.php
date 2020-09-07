@@ -20,79 +20,131 @@ class User
 
     protected $role;
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
     }
 
-    public function setUsername($username)
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
     {
-        $this->username = $username;
+        $this->id = $id;
     }
 
+    /**
+     * @return mixed
+     */
     public function getUsername()
     {
         return $this->username;
     }
 
-    public function setFirstName($first_name)
+    /**
+     * @param mixed $username
+     */
+    public function setUsername($username)
     {
-        $this->first_name = $first_name;
+        $this->username = $username;
     }
 
+    /**
+     * @return mixed
+     */
     public function getFirstName()
     {
         return $this->first_name;
     }
 
-    public function setLastName($last_name)
+    /**
+     * @param mixed $first_name
+     */
+    public function setFirstName($first_name)
     {
-        $this->last_name = $last_name;
+        $this->first_name = $first_name;
     }
 
+    /**
+     * @return mixed
+     */
     public function getLastName()
     {
         return $this->last_name;
     }
 
-    public function setEmail($email)
+    /**
+     * @param mixed $last_name
+     */
+    public function setLastName($last_name)
     {
-        $this->email = $email;
+        $this->last_name = $last_name;
     }
 
+    /**
+     * @return mixed
+     */
     public function getEmail()
     {
         return $this->email;
     }
 
-    public function setPassword($password)
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
     {
-        $this->password = $password;
+        $this->email = $email;
     }
 
+    /**
+     * @return mixed
+     */
     public function getPassword()
     {
         return $this->password;
     }
 
-    public function setCreated(\DateTime $created)
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password)
     {
-        $this->created = $created;
+        $this->password = $password;
     }
 
+    /**
+     * @return mixed
+     */
     public function getCreated()
     {
         return $this->created;
     }
 
-    public function setRole($role)
+    /**
+     * @param mixed $created
+     */
+    public function setCreated($created)
     {
-        $this->role = $role;
+        $this->created = $created;
     }
 
+    /**
+     * @return mixed
+     */
     public function getRole()
     {
         return $this->role;
     }
 
+    /**
+     * @param mixed $role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
 }

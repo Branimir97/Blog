@@ -25,9 +25,7 @@ class ProfileController extends View
         if(isset($_SESSION['loggedIn_username']))
         {
             $this->loggedInUsername = $_SESSION['loggedIn_username'];
-
         }
-
 
         $this->userStorage = new MySqlDatabaseUserStorage($this->db);
 

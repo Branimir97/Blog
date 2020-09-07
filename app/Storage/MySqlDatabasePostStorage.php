@@ -32,7 +32,7 @@ class MySqlDatabasePostStorage implements PostStorageInterface
         $statement->execute();
 
         //$_SESSION['postCreated'] = 'Successfully created post.';
-        header("Location: /adminPanel");
+        header("Location: /addNewPost");
 
     }
 

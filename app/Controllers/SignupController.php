@@ -56,7 +56,5 @@ class SignupController extends View
 
             }
         }
-
     }
-
 }

@@ -7,6 +7,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <link rel="icon" href="Uploaded_images/logo.png">
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -18,8 +20,7 @@
 
     <style>
 
-        *
-        {
+        * {
             font-family: "Ubuntu Condensed", sans-serif;
         }
 
@@ -27,7 +28,7 @@
             width: 800px;
         }
 
-        a.login, a.adminPanel, a.logout, a.profile{
+        a.login, a.adminPanel, a.logout, a.profile {
             float: right;
         }
 
@@ -48,7 +49,7 @@
             height: 100%;
         }
 
-        p.introduction {
+        p.introduction, p.date {
             font-size: 14px;
             color: lightseagreen;
         }
@@ -67,8 +68,7 @@
             color: dodgerblue;
         }
 
-        h6.loggedOut
-        {
+        h6.loggedOut {
             font-size: 11px;
             color: red;
         }
@@ -88,11 +88,13 @@
 
         <a role="button" class="btn btn-secondary logout" href="home/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
 
-        <a role="button" class="btn btn-secondary profile mr-1" href="/profile">My profile <i class="fas fa-user-cog"></i></a>
+        <a role="button" class="btn btn-secondary profile mr-1" href="/profile">My profile <i
+                    class="fas fa-user-cog"></i></a>
 
 
         <?php if (isset($_SESSION['admin_loggedIn']) && $_SESSION['admin_loggedIn'] == true): ?>
-            <a href="/adminPanel" class="btn btn-danger adminPanel mr-1" role="button">Admin panel <i class="fas fa-users-cog"></i></a>
+            <a href="/adminPanel" class="btn btn-danger adminPanel mr-1" role="button">Admin panel <i
+                        class="fas fa-users-cog"></i></a>
         <?php endif; ?>
     <?php else: ?>
 
@@ -104,8 +106,14 @@
 <div class="container">
     <a href="/home"><i class="fas fa-long-arrow-alt-left"></i> Go back to homepage</a>
 
+    <?php
+    $mysqldate = $postDetails->getCreated();
+    $phpdate = strtotime($mysqldate);
+    $myDateFormat = date('d. M Y. H:i:s', $phpdate);
+    ?>
 
     <h1 class="text-center title mt-3"><?= $postDetails->getTitle() ?></h1>
+    <p class="text-center mt-3 date"><?= $myDateFormat ?></p>
     <div class="fake-img">
         <img src="<?= '../' . $postDetails->getImgPath() ?>">
     </div>
@@ -118,15 +126,15 @@
 
     <div id="comments" class="mb-3">
 
-        <?php  if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
+        <?php if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true): ?>
             <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
                     aria-expanded="false" aria-controls="collapseExample">
                 <i class="far fa-comment"></i> Leave a comment
             </button>
         <?php else: ?>
 
-        <h6 class="loggedOut">* You need to be logged in for posting your comments.</h6>
-        <?php endif;?>
+            <h6 class="loggedOut">* You need to be logged in for posting your comments.</h6>
+        <?php endif; ?>
 
         <div class="collapse" id="collapseExample">
             <div class="card card-body">
@@ -146,15 +154,16 @@
             </div>
         </div>
 
-        <?php if ($commentsDetails!=null): ?>
+        <?php if ($commentsDetails != null): ?>
 
-        <?php foreach ($commentsDetails as $comment): ?>
-            <div class="one_comment p-3 mt-3">
-                <p>By: <strong><?= $comment->getPostedBy() ?></strong> at <strong><?= $comment->getCreated() ?></strong></p>
-                <h6><?= $comment->getContent() ?></h6>
-            </div>
+            <?php foreach ($commentsDetails as $comment): ?>
+                <div class="one_comment p-3 mt-3">
+                    <p>By: <strong><?= $comment->getPostedBy() ?></strong> at
+                        <strong><?= $comment->getCreated() ?></strong></p>
+                    <h6><?= $comment->getContent() ?></h6>
+                </div>
 
-        <?php endforeach; ?>
+            <?php endforeach; ?>
         <?php else: ?>
             <h6 class="no_comments mt-2 p-2">No comments yet. Be first who'll comment this post.</h6>
         <?php endif; ?>

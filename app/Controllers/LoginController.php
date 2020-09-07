@@ -36,7 +36,6 @@ class LoginController extends View
             unset($_SESSION['registered']);
         }
 
-
         try {
             echo parent::render('LoginView', ['error'=> $this->error, 'registered'=>$this->registered]);
 
@@ -44,9 +43,7 @@ class LoginController extends View
         {
             echo $e->getMessage();
         }
-
     }
-
 
     public function authenticateAction()
     {
@@ -58,12 +55,8 @@ class LoginController extends View
                 $user->setUsername($_POST['username']);
                 $user->setPassword($_POST['password']);
 
-
                 $this->storage->authenticate($user);
-
             }
         }
     }
-
-
 }

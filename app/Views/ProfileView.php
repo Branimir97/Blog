@@ -1,5 +1,5 @@
 <?php
-if(!isset($_SESSION['loggedIn_username']))
+if (!isset($_SESSION['loggedIn_username']))
 
     return new \Controllers\Controller404();
 
@@ -12,6 +12,8 @@ if(!isset($_SESSION['loggedIn_username']))
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="icon" href="Uploaded_images/logo.png">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
