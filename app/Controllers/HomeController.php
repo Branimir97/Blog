@@ -41,6 +41,12 @@ class HomeController extends View
 
     public function logoutAction()
     {
+        if(isset($_COOKIE['username']) && isset($_COOKIE['password']))
+        {
+            unset($_COOKIE['username']);
+            unset($_COOKIE['password']);
+        }
+
         session_unset();
         session_destroy();
         header("Location: /");

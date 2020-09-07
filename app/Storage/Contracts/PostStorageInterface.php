@@ -21,4 +21,5 @@ interface PostStorageInterface
     public function getVisibility($id);
 
     public function getImgPath($id);
+
 }

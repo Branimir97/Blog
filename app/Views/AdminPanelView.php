@@ -1,3 +1,10 @@
+<?php
+if(!isset($_SESSION['loggedIn_username']))
+
+    return new \Controllers\Controller404();
+
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -79,7 +86,7 @@
                 <th>Created at</th>
                 <th>Visibility</th>
                 <th>Edit</th>
-                <th>Delete</th>
+                <th>Comments</th>
             </tr>
             </thead>
             <tbody>
@@ -103,39 +110,14 @@
                         <?php endif; ?>
                     </td>
                     <td>
-                        <a href="editPost/edit?id=<?= $post->getId() ?>" role="button" class="btn btn-success"><i
-                                    class="far fa-edit"></i></a>
+                        <a href="editPost/edit?id=<?= $post->getId() ?>" role="button" class="btn btn-success">
+                            <i class="far fa-edit"></i>
+                        </a>
                     </td>
                     <td>
-                        <a role="button" class="btn btn-danger"
-                           data-toggle="modal" data-target="#exampleModalCenter">
-                            <i class="far fa-trash-alt"></i></a>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <?php var_dump($post); ?>
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Deleting post
-                                            "<?= $post->getTitle() ?>"</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Are you sure you want to delete this post?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
-                                        </button>
-                                        <a href="adminPanel/delete?id=<?= $post->getId() ?>" role="button"
-                                           class="btn btn-danger">Delete</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="comments/checkComments?id=<?= $post->getId() ?>" role="button" class="btn btn-info">
+                            <i class="fas fa-comment-dots"></i>
+                        </a>
                     </td>
                 </tr>
             <?php endforeach; ?>

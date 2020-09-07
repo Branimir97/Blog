@@ -15,16 +15,30 @@ class ProfileController extends View
 
     protected $userStorage;
 
+    protected $changedPassword;
+
+
     public function __construct(\PDO $db)
     {
         $this->db = $db;
 
-        $this->loggedInUsername = $_SESSION['loggedIn_username'];
+        if(isset($_SESSION['loggedIn_username']))
+        {
+            $this->loggedInUsername = $_SESSION['loggedIn_username'];
+
+        }
+
 
         $this->userStorage = new MySqlDatabaseUserStorage($this->db);
 
+        if(isset($_SESSION['changed_password']))
+        {
+            $this->changedPassword = $_SESSION['changed_password'];
+            unset($_SESSION['changed_password']);
+        }
+
         try {
-            echo parent::render('ProfileView', ['userDetails'=>$this->getUserDetails()]);
+            echo parent::render('ProfileView', ['userDetails'=>$this->getUserDetails(), 'changedPassword'=>$this->changedPassword]);
         } catch (TemplateNotFoundException $e)
         {
             echo $e->getMessage();

@@ -18,8 +18,7 @@
 
     <style>
 
-        *
-        {
+        * {
             font-family: "Ubuntu Condensed", sans-serif;
         }
 
@@ -32,9 +31,21 @@
 </div>
 
 <?php
-if (isset($registered)):
+
+if (isset($_SESSION['loggedIn']) && ($_SESSION['loggedIn'] === true)):?>
+
+    <div class="text-center">
+        <a href="home/logout" class="text-center btn btn-info">LOGOUT FIRST <i class="fas fa-sign-out-alt"></i></a>
+
+    </div>
+    <?php
+    die();
+endif; ?>
+
+
+<?php if (isset($registered)):
     ?>
-    <div class="text-center bg-success p-3 text-white">Uspješno ste se registrirali!</div>
+    <div class="text-center bg-success p-3 mb-3 text-white">Uspješno ste se registrirali!</div>
 
 <?php endif; ?>
 
@@ -66,7 +77,8 @@ if (isset($registered)):
 
         <div class="form-check">
             <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="remember_me" value="checkedValue">
+                <input type="checkbox" class="form-check-input" name="remember_me" id="remember_me"
+                       value="checkedValue">
                 Remember me
             </label>
         </div>
@@ -75,7 +87,24 @@ if (isset($registered)):
         <a role="button" href="/signup" class="btn btn-warning mt-3">Sign up</a>
     </form>
 </div>
-</div>
+
+
+<?php
+if (isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
+    $username = $_COOKIE['username'];
+    $password = $_COOKIE['password'];
+
+    echo "
+            <script>
+                document.getElementById('username').value = '{$username}';
+                document.getElementById('password').value  = '{$password}';
+                document.getElementById('remember_me').checked  = true;
+            </script>
+            ";
+}
+?>
+
+
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

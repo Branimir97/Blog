@@ -27,6 +27,8 @@ class MySqlDatabaseCommentStorage implements CommentStorageInterface
         $statement->bindValue(':created', $comment->getCreated()->format("Y-m-d H:i:s"));
 
         $statement->execute();
+
+        header("Location: /home");
     }
 
     public function get($id)
@@ -44,5 +46,19 @@ class MySqlDatabaseCommentStorage implements CommentStorageInterface
         $statement->execute();
 
         return $statement->fetchAll();
+    }
+
+    public function delete($id)
+    {
+        $statement = $this->db->prepare("
+            DELETE FROM comments
+            WHERE id = :id
+        ");
+
+        $statement->bindValue(':id', $id);
+
+        $statement->execute();
+
+        header("Location: /adminPanel");
     }
 }

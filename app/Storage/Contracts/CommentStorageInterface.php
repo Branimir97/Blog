@@ -10,4 +10,6 @@ interface CommentStorageInterface
 
     public function get($id);
 
+    public function delete($id);
+
 }

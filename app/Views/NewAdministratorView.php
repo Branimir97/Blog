@@ -1,3 +1,10 @@
+<?php
+if(!isset($_SESSION['loggedIn_username']))
+
+    return new \Controllers\Controller404();
+
+?>
+
 <!doctype html>
 <html lang="en">
 <head>

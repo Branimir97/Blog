@@ -1,3 +1,9 @@
+<?php
+if(!isset($_SESSION['loggedIn_username']))
+
+    return new \Controllers\Controller404();
+
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -18,18 +24,15 @@
 
     <style>
 
-        *
-        {
+        * {
             font-family: "Ubuntu Condensed", sans-serif;
         }
 
-        h5
-        {
+        h5 {
             text-decoration: underline;
         }
 
-        .delete, .change_password
-        {
+        .delete, .change_password {
             float: right;
         }
 
@@ -58,11 +61,19 @@
     <?php
     if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
 
-    <p>You are logged in as <strong><?= $_SESSION['loggedIn_username']?></strong></p>
+        <p>You are logged in as <strong><?= $_SESSION['loggedIn_username'] ?></strong></p>
 
     <?php endif; ?>
 
+
 </div>
+
+<?php
+if (isset($changedPassword)):
+    ?>
+    <div class="text-center bg-success p-3 mb-3 text-white"><?= $changedPassword ?></div>
+
+<?php endif; ?>
 
 <div class="container mb-3">
     <a href="/home"><i class="fas fa-long-arrow-alt-left"></i> Go back to homepage</a>
@@ -95,32 +106,37 @@
         </div>
     </div>
 
-    <a href="/home" class="btn btn-info change_password mr-1">Change password</a>
+    <a href="/changePassword" class="btn btn-info change_password mr-1">Change password</a>
 
     <h5 class="mt-3">Account details</h5>
 
     <div class="one_entity p-3 mt-3">
-        <p>Username:<p>
+        <p>Username:
+        <p>
         <h6></t><?= $userDetails->getUsername() ?></h6>
     </div>
 
     <div class="one_entity p-3 mt-3">
-        <p>First name:<p>
+        <p>First name:
+        <p>
         <h6></t><?= $userDetails->getFirstName() ?></h6>
     </div>
 
     <div class="one_entity p-3 mt-3">
-        <p>Last name:<p>
+        <p>Last name:
+        <p>
         <h6></t><?= $userDetails->getLastName() ?></h6>
     </div>
 
     <div class="one_entity p-3 mt-3">
-        <p>Email address:<p>
+        <p>Email address:
+        <p>
         <h6></t><?= $userDetails->getEmail() ?></h6>
     </div>
 
     <div class="one_entity p-3 mt-3">
-        <p>Role:<p>
+        <p>Role:
+        <p>
         <h6><?= $userDetails->getRole() ?></h6>
     </div>
 

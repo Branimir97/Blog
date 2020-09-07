@@ -119,8 +119,6 @@ class MySqlDatabasePostStorage implements PostStorageInterface
             WHERE id = :id
         ");
 
-        var_dump($post->getImgPath());
-
         $statement->bindValue(':title', $post->getTitle());
         $statement->bindValue(':intro', $post->getIntro());
         $statement->bindValue(':img_path', $post->getImgPath());
@@ -157,20 +155,7 @@ class MySqlDatabasePostStorage implements PostStorageInterface
 
         $statementStoreVisibility->execute();
 
-    }
-
-    public function delete($id)
-    {
-
-        $imgPath = $this->getImgPath($id);
-
-        unlink($imgPath);
-
-        $statement = $this->db->prepare("
-            DELETE FROM posts WHERE id = '$id'
-        ");
-
-        $statement->execute();
+        header("Location: /adminPanel");
 
     }
 
@@ -202,6 +187,37 @@ class MySqlDatabasePostStorage implements PostStorageInterface
         $statement->execute();
 
         return $statement->fetch()->getImgPath();
+    }
+
+    public function delete($id)
+    {
+
+        $imgPath = $this->getImgPath($id);
+
+        unlink($imgPath);
+
+        $statement = $this->db->prepare("
+            DELETE FROM posts WHERE id = '$id'
+        ");
+
+        $statement->execute();
+
+        $this->deleteComments($id);
+
+        header("Location: /adminPanel");
+
+    }
+
+    public function deleteComments($post_id)
+    {
+        $statement = $this->db->prepare("
+            DELETE FROM comments
+            WHERE post_id =  :id
+        ");
+
+        $statement->bindValue(':id', $post_id);
+
+        $statement->execute();
     }
 
 }

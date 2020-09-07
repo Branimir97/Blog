@@ -33,8 +33,9 @@ class LoginController extends View
         if(isset($_SESSION['registered']))
         {
             $this->registered = $_SESSION['registered'];
-            unset($_SESSION['registeredT']);
+            unset($_SESSION['registered']);
         }
+
 
         try {
             echo parent::render('LoginView', ['error'=> $this->error, 'registered'=>$this->registered]);

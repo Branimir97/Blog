@@ -38,15 +38,8 @@ class AdminPanelController extends View
 
     public function changeVisibilityAction()
     {
-
         $id = $_GET['id'];
         $this->postStorage->changeVisibility($id);
-    }
-
-    public function deleteAction()
-    {
-        $id = $_GET['id'];
-        $this->postStorage->delete($id);
     }
 
 }

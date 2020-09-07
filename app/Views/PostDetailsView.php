@@ -27,7 +27,7 @@
             width: 800px;
         }
 
-        a.login, a.adminPanel, a.logout {
+        a.login, a.adminPanel, a.logout, a.profile{
             float: right;
         }
 
@@ -86,10 +86,13 @@
 
         <p>You are logged in as <strong><?= $_SESSION['loggedIn_username'] ?></strong></p>
 
-        <a role="button" class="btn btn-light logout" href="home/logout">Logout</a>
+        <a role="button" class="btn btn-secondary logout" href="home/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
+
+        <a role="button" class="btn btn-secondary profile mr-1" href="/profile">My profile <i class="fas fa-user-cog"></i></a>
+
 
         <?php if (isset($_SESSION['admin_loggedIn']) && $_SESSION['admin_loggedIn'] == true): ?>
-            <a href="/adminPanel" class="btn btn-danger adminPanel" role="button">Admin panel</a>
+            <a href="/adminPanel" class="btn btn-danger adminPanel mr-1" role="button">Admin panel <i class="fas fa-users-cog"></i></a>
         <?php endif; ?>
     <?php else: ?>
 

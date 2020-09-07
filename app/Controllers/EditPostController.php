@@ -15,10 +15,14 @@ class EditPostController extends View
 
     protected $postDetails;
 
+    protected $postStorage;
+
     public function __construct(\PDO $db)
     {
         $this->db = $db;
         $this->postDetails = $this->editAction();
+
+        $this->postStorage = new MySqlDatabasePostStorage($this->db);
 
         if(isset($_SESSION['image_errors']))
         {
@@ -50,19 +54,16 @@ class EditPostController extends View
             if(isset($_POST['submit_update']))
             {
 
-                $postStorage = new MySqlDatabasePostStorage($this->db);
-
                 $post = new Post();
 
                 $post->setId($_GET['id']);
 
                 if($_FILES['post_image']['error'] !== UPLOAD_ERR_NO_FILE)
                 {
-                    $imgPath = $postStorage->constructImgPath($_FILES['post_image']);
+                    $imgPath = $this->postStorage->constructImgPath($_FILES['post_image']);
 
                     $post->setImgPath($imgPath);
 
-                    var_dump($imgPath);
                 }
                 else{
                     $post->setImgPath($this->postDetails->getImgPath());
@@ -72,9 +73,16 @@ class EditPostController extends View
                 $post->setIntro($_POST['intro']);
                 $post->setContent($_POST['content']);
 
-                $postStorage->update($post);
+                $this->postStorage->update($post);
 
             }
         }
     }
+
+    public function deleteAction()
+    {
+        $id = $_GET['id'];
+        $this->postStorage->delete($id);
+    }
+
 }

@@ -1,3 +1,10 @@
+<?php
+if(!isset($_SESSION['loggedIn_username']))
+
+    return new \Controllers\Controller404();
+
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -78,7 +85,7 @@
         </div>
 
         <button type="submit" name="submit_update" class="btn btn-warning mb-3">Edit post</button>
-
+        <button type="submit" name="submit_delete" formaction="delete?id=<?= $postDetails->getId()?>" class="btn btn-danger mb-3">Delete post</button>
     </form>
 </div>
 
