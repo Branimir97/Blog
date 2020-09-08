@@ -1,0 +1,24 @@
+*
+{
+    font-family: "Ubuntu Condensed", sans-serif;
+}
+
+.jumbotron
+{
+    background-color: #79ad36;
+}
+
+label
+{
+    color: darkcyan;
+}
+
+button.edit_post
+{
+    background-color: #79ad36;
+}
+
+button.delete
+{
+    float: right;
+}

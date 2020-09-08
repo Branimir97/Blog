@@ -35,6 +35,11 @@ class ProfileController extends View
             unset($_SESSION['changed_password']);
         }
 
+
+    }
+
+    public function indexAction()
+    {
         try {
             echo parent::render('ProfileView', ['userDetails'=>$this->getUserDetails(), 'changedPassword'=>$this->changedPassword]);
         } catch (TemplateNotFoundException $e)

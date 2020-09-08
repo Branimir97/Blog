@@ -23,27 +23,18 @@ if (!isset($_SESSION['loggedIn_username']))
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/6aa1bd9ffa.js" crossorigin="anonymous"></script>
 
-    <title>Add new administrator</title>
+    <!-- Stylesheet -->
 
     <style>
-        * {
-            font-family: "Ubuntu Condensed", sans-serif;
-        }
-
-        p.no_admins, p.no_users {
-            font-weight: bold;
-            color: darkred;
-        }
-
-        strong#disablePrivilegie {
-            color: red;
-        }
-
+        <?php include 'css/add_new_administrator_view.css'; ?>
     </style>
+
+    <title>Add new administrator</title>
+
 </head>
 <body>
 
-<div class="jumbotron text-center text-white bg-info pt-3 pb-3">
+<div class="jumbotron text-center pt-3 pb-3 mb-0 text-white">
     <h1><strong>ADD NEW ADMINISTRATOR</strong></h1>
 
     <?php
@@ -53,11 +44,42 @@ if (!isset($_SESSION['loggedIn_username']))
 
     <?php endif; ?>
 
-
 </div>
 
+<nav class="navbar navbar-expand-md bg-dark navbar-dark mb-4">
+    <!-- Brand -->
+    <a class="navbar-brand" href="/adminPanel">Admin panel <i class="fas fa-user-shield ml-1"></i></a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav ml-auto">
+
+            <?php if (isset($_SESSION['admin_loggedIn']) && $_SESSION['admin_loggedIn'] == true): ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/addNewPost">Create new post <i class="far fa-file-alt"></i></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/addNewAdministrator">Add new administrator <i
+                                class="fas fa-users-cog"></i></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">My profile <i class="fas fa-user-cog"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="home/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </div>
+</nav>
+
 <div class="container">
-    <a href="/adminPanel"><i class="fas fa-long-arrow-alt-left"></i> Go back to admin panel</a>
 
     <div class="row mt-3">
 
@@ -139,7 +161,7 @@ if (!isset($_SESSION['loggedIn_username']))
                 ?>
                 <p class="no_users mt-3">No registered users</p>
             <?php endif; ?>
-            <h6 class="mt-3"><a href="/signup" class="btn btn-warning" role="button">Register new user</a></h6>
+            <a href="/signup" class="btn register_user mt-3 text-white" role="button">Register new user</a>
         </div>
     </div>
 </div>

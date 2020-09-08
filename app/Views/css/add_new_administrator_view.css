@@ -1,0 +1,22 @@
+* {
+    font-family: "Ubuntu Condensed", sans-serif;
+}
+
+.jumbotron
+{
+    background-color: #79ad36;
+}
+
+p.no_admins, p.no_users {
+    font-weight: bold;
+    color: darkred;
+}
+
+strong#disablePrivilegie {
+    color: red;
+}
+
+a.register_user
+{
+    background-color: #79ad36;
+}

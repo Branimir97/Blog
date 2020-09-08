@@ -26,6 +26,10 @@ class PostDetailsController extends View
 
         $this->commentsDetails = $this->getComments();
 
+    }
+
+    public function indexAction()
+    {
         try {
             echo parent::render('PostDetailsView', ['postDetails'=>$this->postDetails, 'commentsDetails'=>$this->commentsDetails]);
         } catch(TemplateNotFoundException $e)

@@ -23,7 +23,10 @@ class ChangePasswordController extends View
             $this->error =  $_SESSION['error_password'];
             unset($_SESSION['error_password']);
         }
+    }
 
+    public function indexAction()
+    {
         try {
             echo parent::render('ChangePasswordView', ['error_password'=> $this->error]);
         } catch (TemplateNotFoundException $e)

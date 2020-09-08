@@ -16,19 +16,17 @@
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/6aa1bd9ffa.js" crossorigin="anonymous"></script>
 
+    <!-- Stylesheet -->
+    <style>
+        <?php include 'css/loginview.css'; ?>
+    </style>
+
     <title>Login</title>
 
-    <style>
-
-        * {
-            font-family: "Ubuntu Condensed", sans-serif;
-        }
-
-    </style>
 </head>
 <body>
 
-<div class="jumbotron text-white text-center bg-secondary pt-3 pb-3">
+<div class="jumbotron text-center pt-3 pb-3 text-white">
     <h1><strong>LOGIN </strong><i class="fas fa-sign-in-alt"></i></h1>
 </div>
 
@@ -37,16 +35,14 @@
 if (isset($_SESSION['loggedIn']) && ($_SESSION['loggedIn'] === true)):?>
 
     <div class="text-center">
-        <a href="home/logout" class="text-center btn btn-info">LOGOUT FIRST <i class="fas fa-sign-out-alt"></i></a>
+        <a href="/" class="text-center btn btn-info">LOGOUT FIRST <i class="fas fa-sign-out-alt"></i></a>
 
     </div>
-    <?php
-    die();
-endif; ?>
+    <?php die();
+        endif; ?>
 
+<?php if (isset($registered)): ?>
 
-<?php if (isset($registered)):
-    ?>
     <div class="text-center bg-success p-3 mb-3 text-white">Uspješno ste se registrirali!</div>
 
 <?php endif; ?>
@@ -85,8 +81,8 @@ endif; ?>
             </label>
         </div>
 
-        <button type="submit" name="submit" class="btn btn-primary mt-3">Login</button>
-        <a role="button" href="/signup" class="btn btn-warning mt-3">Sign up</a>
+        <button type="submit" name="submit" class="btn mt-3 login">Login</button>
+        <a role="button" href="/signup" class="btn mt-3 btn-secondary signup">Sign up</a>
     </form>
 </div>
 

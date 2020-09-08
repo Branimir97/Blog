@@ -22,20 +22,17 @@ if (!isset($_SESSION['loggedIn_username']))
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/6aa1bd9ffa.js" crossorigin="anonymous"></script>
 
-    <title>Profile</title>
-
+    <!-- Stylesheet -->
     <style>
-
-        * {
-            font-family: "Ubuntu Condensed", sans-serif;
-        }
-
+        <?php include 'css/change_password_view.css'; ?>
     </style>
+
+    <title>Change password</title>
 
 </head>
 <body>
 
-<div class="jumbotron text-center bg-secondary text-white pt-3 pb-3">
+<div class="jumbotron text-center pt-3 pb-3 mb-0 text-white">
     <h1><strong>CHANGE PASSWORD</strong></h1>
 
     <?php
@@ -47,6 +44,43 @@ if (!isset($_SESSION['loggedIn_username']))
 
 </div>
 
+<nav class="navbar navbar-expand-md bg-dark navbar-dark mb-3">
+    <!-- Brand -->
+    <a class="navbar-brand" href="/">Homepage <i class="fas fa-house-damage ml-1"></i></a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav ml-auto">
+
+            <?php if (isset($_SESSION['admin_loggedIn']) && $_SESSION['admin_loggedIn'] == true): ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/adminPanel">Admin panel <i class="fas fa-users-cog"></i></a>
+                </li>
+            <?php endif; ?>
+
+            <?php if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/profile">My profile <i class="fas fa-user-cog"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="home/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
+                </li>
+
+            <?php else: ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login <i class="fas fa-sign-in-alt"></i></a>
+                </li>
+            <?php endif; ?>
+
+        </ul>
+    </div>
+</nav>
+
 <?php if (isset($error_password)): ?>
 
     <div class="text-center bg-danger p-3 text-white mb-3"><?= $error_password; ?></div>
@@ -54,8 +88,6 @@ if (!isset($_SESSION['loggedIn_username']))
 <?php endif; ?>
 
 <div class="container">
-
-    <a href="/profile"><i class="fas fa-long-arrow-alt-left"></i> Go back to my profile</a>
 
     <form action="changePassword/change" method="POST">
 
@@ -80,7 +112,7 @@ if (!isset($_SESSION['loggedIn_username']))
             <small id="helpId" class="text-muted">Enter new password one more time</small>
         </div>
 
-        <button type="submit" name="submit_password" class="btn btn-primary">Change password</button>
+        <button type="submit" name="submit_password" class="btn text-white change_password">Change password</button>
     </form>
 </div>
 

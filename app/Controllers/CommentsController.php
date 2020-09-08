@@ -21,13 +21,17 @@ class CommentsController extends View
         $this->commentStorage = new MySqlDatabaseCommentStorage($this->db);
 
         $this->comments = $this->checkCommentsAction();
-
         try {
             echo parent::render('CommentsView', ['comments'=>$this->comments]);
         } catch (TemplateNotFoundException $e)
         {
             echo $e->getMessage();
         }
+    }
+
+    public function indexAction()
+    {
+
     }
 
     public function checkCommentsAction()

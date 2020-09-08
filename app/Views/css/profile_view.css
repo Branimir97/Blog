@@ -1,0 +1,30 @@
+* {
+    font-family: "Ubuntu Condensed", sans-serif;
+}
+
+.jumbotron
+{
+    background-color: #79ad36 !important;
+}
+
+h5 {
+    text-decoration: underline;
+}
+
+.delete, .change_password {
+    float: right;
+}
+
+.one_entity {
+    background-color: lightgrey;
+    border-left: 5px solid darkgrey;
+}
+
+.one_entity p {
+    font-size: 11px;
+    color: dodgerblue;
+}
+
+.one_entity h6 {
+    margin-left: 15px;
+}

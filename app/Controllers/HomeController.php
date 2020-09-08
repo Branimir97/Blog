@@ -14,11 +14,9 @@ class HomeController extends View
     public function __construct(\PDO $db)
     {
         $this->db = $db;
-        $this->index();
-
     }
 
-    public function index()
+    public function indexAction()
     {
 
         $posts = $this->getAllVisiblePosts();

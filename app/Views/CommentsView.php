@@ -23,24 +23,18 @@ if (!isset($_SESSION['loggedIn_username']))
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/6aa1bd9ffa.js" crossorigin="anonymous"></script>
 
-    <title>Comments</title>
+    <!-- Stylesheet -->
 
     <style>
-
-        * {
-            font-family: "Ubuntu Condensed", sans-serif;
-        }
-
-        .one_comment strong {
-            color: darkblue;
-        }
-
+        <?php include 'css/comments_view.css'; ?>
     </style>
+
+    <title>Comments</title>
 
 </head>
 <body>
 
-<div class="jumbotron text-center bg-secondary text-white pt-3 pb-3">
+<div class="jumbotron text-center text-white pt-3 pb-3 mb-0">
     <h1><strong>COMMENTS</strong></h1>
 
     <?php
@@ -52,6 +46,39 @@ if (!isset($_SESSION['loggedIn_username']))
 
 </div>
 
+<nav class="navbar navbar-expand-md bg-dark navbar-dark mb-4">
+    <!-- Brand -->
+    <a class="navbar-brand" href="/adminPanel">Admin panel <i class="fas fa-user-shield ml-1"></i></a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav ml-auto">
+
+            <?php if (isset($_SESSION['admin_loggedIn']) && $_SESSION['admin_loggedIn'] == true): ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/addNewPost">Create new post <i class="far fa-file-alt"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/addNewAdministrator">Add new administrator <i
+                                class="fas fa-users-cog"></i></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">My profile <i class="fas fa-user-cog"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="home/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </div>
+</nav>
+
 <?php if (isset($error)): ?>
 
     <div class="text-center bg-danger p-3 text-white mb-3"><?= $error; ?></div>
@@ -60,10 +87,15 @@ if (!isset($_SESSION['loggedIn_username']))
 
 <div class="container">
 
-    <a href="/adminPanel"><i class="fas fa-long-arrow-alt-left"></i> Go back to admin panel</a>
-
     <?php if (isset($comments)):
         foreach ($comments as $comment): ?>
+
+            <?php
+            $mysqldate = $comment->getCreated();
+            $phpdate = strtotime($mysqldate);
+            $myDateFormat = date('d. M Y. H:i:s', $phpdate);
+            ?>
+
             <div class="one_comment bg-info text-center">
 
                 <h5 class="mt-3 text-center p-2"><?= $comment->getContent(); ?></h5>
@@ -74,7 +106,7 @@ if (!isset($_SESSION['loggedIn_username']))
                     </strong>
                     at
                     <strong>
-                        <?= $comment->getCreated(); ?>
+                        <?= $myDateFormat ?>
                     </strong>
                 </p>
                 <a href="delete?id=<?= $comment->getId() ?>" class="btn btn-danger m-1" role="button">

@@ -16,96 +16,66 @@
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/6aa1bd9ffa.js" crossorigin="anonymous"></script>
 
+    <!-- Stylesheet -->
+    <style>
+        <?php include 'css/post_details_view.css'; ?>
+    </style>
+
     <title><?= $postDetails->getTitle() ?></title>
 
-    <style>
-
-        * {
-            font-family: "Ubuntu Condensed", sans-serif;
-        }
-
-        .container {
-            width: 800px;
-        }
-
-        a.login, a.adminPanel, a.logout, a.profile {
-            float: right;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        h1.title {
-            font-family: "Ubuntu Condensed";
-        }
-
-        .fake-img {
-            height: 300px;
-        }
-
-        .fake-img img {
-            width: 100%;
-            height: 100%;
-        }
-
-        p.introduction, p.date {
-            font-size: 14px;
-            color: lightseagreen;
-        }
-
-        .one_comment {
-            background-color: lightblue;
-            border-left: 5px solid dodgerblue;
-        }
-
-        .one_comment h6 {
-            font-size: 13px;
-        }
-
-        .one_comment p, .no_comments {
-            font-size: 11px;
-            color: dodgerblue;
-        }
-
-        h6.loggedOut {
-            font-size: 11px;
-            color: red;
-        }
-
-
-    </style>
 </head>
 <body>
 
-<div class="jumbotron pt-3 pb-3 text-center text-white bg-info">
-    <h1><strong>BLOG</strong></h1>
+<div class="jumbotron pt-3 pb-3 text-center text-white mb-0">
+    <h1><strong>Branimir's BLOG</strong></h1>
 
     <?php
     if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
 
         <p>You are logged in as <strong><?= $_SESSION['loggedIn_username'] ?></strong></p>
 
-        <a role="button" class="btn btn-secondary logout" href="home/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
-
-        <a role="button" class="btn btn-secondary profile mr-1" href="/profile">My profile <i
-                    class="fas fa-user-cog"></i></a>
-
-
-        <?php if (isset($_SESSION['admin_loggedIn']) && $_SESSION['admin_loggedIn'] == true): ?>
-            <a href="/adminPanel" class="btn btn-danger adminPanel mr-1" role="button">Admin panel <i
-                        class="fas fa-users-cog"></i></a>
-        <?php endif; ?>
-    <?php else: ?>
-
-        <a role="button" class="btn btn-light login" href="/login">Login</a>
     <?php endif; ?>
 
 </div>
 
-<div class="container">
-    <a href="/home"><i class="fas fa-long-arrow-alt-left"></i> Go back to homepage</a>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="/">Homepage <i class="fas fa-house-damage ml-1"></i></a>
 
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav ml-auto">
+
+            <?php if (isset($_SESSION['admin_loggedIn']) && $_SESSION['admin_loggedIn'] == true): ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/adminPanel">Admin panel <i class="fas fa-users-cog"></i></a>
+                </li>
+            <?php endif; ?>
+
+            <?php if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">My profile <i class="fas fa-user-cog"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="home/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
+                </li>
+
+            <?php else: ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login <i class="fas fa-sign-in-alt"></i></a>
+                </li>
+            <?php endif; ?>
+
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
     <?php
     $mysqldate = $postDetails->getCreated();
     $phpdate = strtotime($mysqldate);
@@ -157,9 +127,16 @@
         <?php if ($commentsDetails != null): ?>
 
             <?php foreach ($commentsDetails as $comment): ?>
+
+                <?php
+                $mysqldate = $comment->getCreated();
+                $phpdate = strtotime($mysqldate);
+                $myDateFormat = date('d. M Y. H:i:s', $phpdate);
+                ?>
+
                 <div class="one_comment p-3 mt-3">
                     <p>By: <strong><?= $comment->getPostedBy() ?></strong> at
-                        <strong><?= $comment->getCreated() ?></strong></p>
+                        <strong><?= $myDateFormat ?></strong></p>
                     <h6><?= $comment->getContent() ?></h6>
                 </div>
 
@@ -182,6 +159,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
-</body>
 </body>
 </html>

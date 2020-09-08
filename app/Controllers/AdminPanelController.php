@@ -12,7 +12,6 @@ class AdminPanelController extends View
 
     protected $postStorage;
 
-
     protected $posts;
 
     public function __construct(\PDO $db)
@@ -22,7 +21,10 @@ class AdminPanelController extends View
         $this->postStorage = new MySqlDatabasePostStorage($this->db);
 
         $this->posts = $this->getAllAction();
+    }
 
+    public function indexAction()
+    {
         try {
             echo parent::render('AdminPanelView', ['posts'=>$this->posts]);
         } catch (TemplateNotFoundException $e)

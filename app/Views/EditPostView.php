@@ -23,29 +23,61 @@ if (!isset($_SESSION['loggedIn_username']))
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/6aa1bd9ffa.js" crossorigin="anonymous"></script>
 
+    <!-- Stylesheet -->
+    <style>
+        <?php include 'css/edit_post_view.css'; ?>
+    </style>
+
     <title>Edit post</title>
 
-    <style>
-        a.logout {
-            float: right;
-        }
-    </style>
 </head>
 <body>
-<div class="jumbotron text-center text-white bg-info">
+<div class="jumbotron text-center text-white pt-3 pb-3 mb-0">
     <h1><strong>EDIT POST</strong></h1>
+
     <?php
     if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
-        <p>You are logged in as <strong><?= $_SESSION['loggedIn_fullName'] ?></strong></p>
 
-        <a role="button" class="btn btn-light logout" href="/home/logout">Logout</a>
+        <p>You are logged in as <strong><?= $_SESSION['loggedIn_username'] ?></strong></p>
 
     <?php endif; ?>
 
 </div>
 
+<nav class="navbar navbar-expand-md bg-dark navbar-dark mb-4">
+    <!-- Brand -->
+    <a class="navbar-brand" href="/adminPanel">Admin panel <i class="fas fa-user-shield ml-1"></i></a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav ml-auto">
+
+            <?php if (isset($_SESSION['admin_loggedIn']) && $_SESSION['admin_loggedIn'] == true): ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/addNewPost">Create new post <i class="far fa-file-alt"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/addNewAdministrator">Add new administrator <i
+                                class="fas fa-users-cog"></i></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">My profile <i class="fas fa-user-cog"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="home/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </div>
+</nav>
+
 <div class="container">
-    <a href="/adminPanel"><i class="fas fa-long-arrow-alt-left"></i> Go back to admin panel</a>
 
     <?php if (isset($error)): ?>
 
@@ -53,25 +85,52 @@ if (!isset($_SESSION['loggedIn_username']))
 
     <?php endif; ?>
 
+    <button type="submit" name="submit_delete"
+            data-toggle="modal" data-target="#exampleModalCenter"
+            class="btn btn-danger delete mb-3">Delete post
+    </button>
 
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Account delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete your account?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel
+                    </button>
+                    <a href="delete?id=<?= $postDetails->getId() ?>" role="button"
+                       class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <form action="update?id=<?= $postDetails->getId() ?>" method="post" enctype="multipart/form-data">
 
         <div class="form-group">
-            <label for="title"></label>
+            <label for="title">Title</label>
             <input type="text" name="title" id="title" class="form-control"
                    aria-describedby="helpId" value="<?= $postDetails->getTitle() ?>">
             <small id="helpId" class="text-muted">Write some good title here</small>
         </div>
 
         <div class="form-group">
-            <label for="intro"></label>
+            <label for="intro">Introduction</label>
             <textarea class="form-control" name="intro" id="intro" placeholder="Post introduction" rows="3"
                       required><?= html_entity_decode($postDetails->getIntro()) ?></textarea>
             <small id="helpId" class="text-muted">Write some good text to attract people open your post</small>
         </div>
 
         <div class="form-group">
-            <label for="content"></label>
+            <label for="content">Content</label>
             <textarea class="form-control" name="content" id="content" placeholder="Post content" rows="6"
                       required><?= html_entity_decode($postDetails->getContent()) ?></textarea>
             <small id="helpId" class="text-muted">Write some text for your post here</small>
@@ -90,11 +149,10 @@ if (!isset($_SESSION['loggedIn_username']))
                 stored</small>
         </div>
 
-        <button type="submit" name="submit_update" class="btn btn-warning mb-3">Edit post</button>
-        <button type="submit" name="submit_delete" formaction="delete?id=<?= $postDetails->getId() ?>"
-                class="btn btn-danger mb-3">Delete post
-        </button>
+        <button type="submit" name="submit_update" class="btn text-white edit_post mb-3">Edit post</button>
+
     </form>
+
 </div>
 
 

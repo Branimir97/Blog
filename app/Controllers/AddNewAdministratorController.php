@@ -25,7 +25,10 @@ class AddNewAdministratorController extends View
         $this->admins = $this->getAllAdmins();
 
         $this->users = $this->getAllUsers();
+    }
 
+    public function indexAction()
+    {
         try {
             echo parent::render('NewAdministratorView', ['admins'=>$this->admins, 'users'=>$this->users]);
 

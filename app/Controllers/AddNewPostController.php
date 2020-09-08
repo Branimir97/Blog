@@ -28,8 +28,10 @@ class AddNewPostController extends View
             $this->postCreated = $_SESSION['postCreated'];
             unset($_SESSION['postCreated']);
         }
+    }
 
-
+    public function indexAction()
+    {
         try {
             echo parent::render('NewPostView', ['error' => $this->error, 'postCreated'=>$this->postCreated]);
         } catch (TemplateNotFoundException $e) {

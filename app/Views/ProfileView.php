@@ -22,42 +22,17 @@ if (!isset($_SESSION['loggedIn_username']))
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/6aa1bd9ffa.js" crossorigin="anonymous"></script>
 
-    <title>Profile</title>
-
+    <!-- Stylesheet -->
     <style>
-
-        * {
-            font-family: "Ubuntu Condensed", sans-serif;
-        }
-
-        h5 {
-            text-decoration: underline;
-        }
-
-        .delete, .change_password {
-            float: right;
-        }
-
-        .one_entity {
-            background-color: lightgrey;
-            border-left: 5px solid darkgrey;
-        }
-
-        .one_entity p {
-            font-size: 11px;
-            color: dodgerblue;
-        }
-
-        .one_entity h6 {
-            margin-left: 15px;
-        }
-
+        <?php include 'css/profile_view.css'; ?>
     </style>
+
+    <title>My profile</title>
 
 </head>
 <body>
 
-<div class="jumbotron text-center bg-secondary text-white pt-3 pb-3">
+<div class="jumbotron text-center pt-3 pb-3 mb-0 text-white">
     <h1><strong>MY PROFILE</strong></h1>
 
     <?php
@@ -67,18 +42,52 @@ if (!isset($_SESSION['loggedIn_username']))
 
     <?php endif; ?>
 
-
 </div>
 
-<?php
-if (isset($changedPassword)):
-    ?>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark mb-4">
+    <!-- Brand -->
+    <a class="navbar-brand" href="/">Homepage <i class="fas fa-house-damage ml-1"></i></a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav ml-auto">
+
+            <?php if (isset($_SESSION['admin_loggedIn']) && $_SESSION['admin_loggedIn'] == true): ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/adminPanel">Admin panel <i class="fas fa-users-cog"></i></a>
+                </li>
+            <?php endif; ?>
+
+            <?php if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/profile">My profile <i class="fas fa-user-cog"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="home/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
+                </li>
+
+            <?php else: ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login <i class="fas fa-sign-in-alt"></i></a>
+                </li>
+            <?php endif; ?>
+
+        </ul>
+    </div>
+</nav>
+
+<?php if (isset($changedPassword)):?>
+
     <div class="text-center bg-success p-3 mb-3 text-white"><?= $changedPassword ?></div>
 
 <?php endif; ?>
 
 <div class="container mb-3">
-    <a href="/home"><i class="fas fa-long-arrow-alt-left"></i> Go back to homepage</a>
 
     <a role="button" class="btn btn-danger delete"
        data-toggle="modal" data-target="#exampleModalCenter">Delete account

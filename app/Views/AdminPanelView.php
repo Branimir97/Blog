@@ -23,32 +23,16 @@ if (!isset($_SESSION['loggedIn_username']))
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/6aa1bd9ffa.js" crossorigin="anonymous"></script>
 
+    <!-- Stylesheet -->
+    <style>
+        <?php include 'css/admin_panel_view.css'; ?>
+    </style>
+
     <title>Admin Panel</title>
 
-    <style>
-
-        * {
-            font-family: "Ubuntu Condensed", sans-serif;
-        }
-
-        a.logout, a.profile, a.home {
-            float: right;
-        }
-
-        td img {
-            width: 80px;
-            height: 70px;
-        }
-
-        td img:hover {
-            cursor: pointer;
-            box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
-        }
-
-    </style>
 </head>
 <body>
-<div class="jumbotron text-center text-white bg-danger pt-3 pb-3">
+<div class="jumbotron text-center pt-3 pb-3 mb-0 text-white">
     <h1><strong>ADMIN PANEL</strong></h1>
 
     <?php
@@ -56,18 +40,44 @@ if (!isset($_SESSION['loggedIn_username']))
 
         <p>You are logged in as <strong><?= $_SESSION['loggedIn_username'] ?></strong></p>
 
-        <a role="button" class="btn btn-secondary logout" href="/home/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
-
-        <a role="button" class="btn btn-secondary home mr-1" href="/home"><i class="fas fa-house-damage"></i>
-            Homepage</a>
-
     <?php endif; ?>
 
 </div>
 
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="/home">Homepage <i class="fas fa-house-damage ml-1"></i></a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav ml-auto">
+
+            <?php if (isset($_SESSION['admin_loggedIn']) && $_SESSION['admin_loggedIn'] == true): ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/addNewPost">Create new post <i class="far fa-file-alt"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/addNewAdministrator">Add new administrator <i
+                                class="fas fa-users-cog"></i></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">My profile <i class="fas fa-user-cog"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="home/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </div>
+</nav>
+
 <div class="container-fluid">
-    <a role="button" class="btn btn-success" href="/addNewPost">Create new post</a>
-    <a role="button" class="btn btn-info" href="/addNewAdministrator">Add new administrator</a>
 
     <?php if ($posts == null): ?>
 

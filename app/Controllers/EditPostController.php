@@ -29,7 +29,6 @@ class EditPostController extends View
             $this->error = $_SESSION['image_errors'];
             session_destroy();
         }
-
         try {
             echo parent::render('EditPostView', ['error'=>$this->error, 'postDetails'=>$this->postDetails]);
         } catch (TemplateNotFoundException $e)
@@ -38,10 +37,12 @@ class EditPostController extends View
         }
     }
 
+
+
     public function editAction()
     {
-        $id = $_GET['id'];
 
+        $id = $_GET['id'];
         $postStorage = new MySqlDatabasePostStorage($this->db);
         return $postStorage->get($id);
     }

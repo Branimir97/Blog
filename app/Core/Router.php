@@ -27,7 +27,6 @@ class Router
         if (isset($urlParts[1])) {
             if ($urlParts[1] == '') {
                 $controller = 'Home';
-
             } else {
                 $controller = $urlParts[1];
             }
@@ -41,6 +40,9 @@ class Router
             } else {
                 $viewAction = $urlParts[2] . 'Action';
             }
+        } else
+        {
+            $viewAction = 'indexAction';
         }
 
         $controllerFile = 'Controllers/' . ucfirst($controller) . 'Controller' . '.php';
@@ -62,9 +64,7 @@ class Router
                     return new Controller404();
                 } else {
                     $controllerClass->$viewAction();
-
                 }
-
             } else {
                 return $controllerClass;
             }

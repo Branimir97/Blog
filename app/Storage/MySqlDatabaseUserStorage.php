@@ -234,10 +234,11 @@ class MySqlDatabaseUserStorage implements UserStorageInterface
         $statement->bindValue(':username', $username);
 
         $statement->execute();
-        header("Location: /home");
 
         session_unset();
         session_destroy();
+
+        header("Location: /home");
     }
 
     public function checkPasswords($password1, $password2)

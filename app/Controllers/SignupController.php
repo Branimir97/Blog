@@ -25,13 +25,15 @@ class SignupController extends View
             $this->error = $_SESSION['error'];
             unset($_SESSION['error']);
         }
+    }
 
+    public function indexAction()
+    {
         try {
             echo parent::render('SignUpView', ['error'=>$this->error]);
         } catch (TemplateNotFoundException $e) {
             echo $e->getMessage();
         }
-
     }
 
     public function createAction()

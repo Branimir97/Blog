@@ -31,7 +31,6 @@ class MySqlDatabasePostStorage implements PostStorageInterface
         $statement->bindValue(':visibility', $post->getVisibility());
         $statement->execute();
 
-        //$_SESSION['postCreated'] = 'Successfully created post.';
         header("Location: /addNewPost");
 
     }
@@ -127,7 +126,7 @@ class MySqlDatabasePostStorage implements PostStorageInterface
 
         $statement->execute();
 
-        header("Location: /adminPanel");
+        header("Location: /editPost?id=".$post->getId());
     }
 
     public function changeVisibility($id)
@@ -194,17 +193,17 @@ class MySqlDatabasePostStorage implements PostStorageInterface
 
         $imgPath = $this->getImgPath($id);
 
-        unlink($imgPath);
+        //unlink($imgPath);
 
         $statement = $this->db->prepare("
             DELETE FROM posts WHERE id = '$id'
         ");
 
-        $statement->execute();
+        //$statement->execute();
 
         $this->deleteComments($id);
 
-        header("Location: /adminPanel");
+        header("Location: adminPanel/index");
 
     }
 
@@ -217,7 +216,7 @@ class MySqlDatabasePostStorage implements PostStorageInterface
 
         $statement->bindValue(':id', $post_id);
 
-        $statement->execute();
+        //$statement->execute();
     }
 
 }

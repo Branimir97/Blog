@@ -16,21 +16,17 @@
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/6aa1bd9ffa.js" crossorigin="anonymous"></script>
 
+    <!-- Stylesheet -->
+    <style>
+        <?php include 'css/signupview.css'; ?>
+    </style>
 
     <title>Sign up</title>
 
-    <style>
-
-        *
-        {
-            font-family: "Ubuntu Condensed", sans-serif;
-        }
-
-    </style>
 </head>
 <body>
 
-    <div class="jumbotron text-center text-white bg-secondary pt-3 pb-3">
+    <div class="jumbotron text-center pt-3 pb-3 text-white">
         <h1><strong>SIGN UP </strong><i class="fas fa-user-plus"></i></h1>
     </div>
 
@@ -75,7 +71,7 @@
                 <small id="helpId" class="text-muted">Here you need to enter some good password</small>
             </div>
 
-            <button type="submit" name="submit" class="btn btn-primary">Sign up</button>
+            <button type="submit" name="submit" class="btn signup">Sign up</button>
         </form>
     </div>
 

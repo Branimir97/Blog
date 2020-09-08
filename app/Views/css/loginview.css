@@ -1,0 +1,21 @@
+* {
+    font-family: "Ubuntu Condensed", sans-serif;
+}
+
+.jumbotron
+{
+    background-color: #79ad36;
+}
+
+button.login
+{
+    background-color: #79ad36;
+}
+
+@media screen and (min-width: 1024px)
+{
+    .container
+    {
+        width: 700px
+    }
+}

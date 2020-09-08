@@ -1,0 +1,18 @@
+* {
+    font-family: "Ubuntu Condensed", sans-serif;
+}
+
+.jumbotron
+{
+    background-color: #79ad36 !important;
+}
+
+span {
+    font-size: 11px;
+    color: red;
+}
+
+button.new_post
+{
+    background-color: #79ad36;
+}

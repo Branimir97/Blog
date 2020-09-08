@@ -16,21 +16,16 @@
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/6aa1bd9ffa.js" crossorigin="anonymous"></script>
 
+    <!-- Stylesheet -->
+    <style>
+        <?php include 'css/new_post_view.css'; ?>
+    </style>
+
     <title>Create new post</title>
 
-    <style>
-        * {
-            font-family: "Ubuntu Condensed", sans-serif;
-        }
-
-        span {
-            font-size: 11px;
-            color: red;
-        }
-    </style>
 </head>
 <body>
-<div class="jumbotron text-center text-white bg-success pt-3 pb-3">
+<div class="jumbotron text-center pt-3 pb-3 mb-0 text-white">
     <h1><strong>CREATE NEW POST</strong></h1>
 
     <?php
@@ -42,8 +37,40 @@
 
 </div>
 
+<nav class="navbar navbar-expand-md bg-dark navbar-dark mb-3">
+    <!-- Brand -->
+    <a class="navbar-brand" href="/adminPanel">Admin panel <i class="fas fa-user-shield ml-1"></i></a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav ml-auto">
+
+            <?php if (isset($_SESSION['admin_loggedIn']) && $_SESSION['admin_loggedIn'] == true): ?>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/addNewPost">Create new post <i class="far fa-file-alt"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/addNewAdministrator">Add new administrator <i
+                                class="fas fa-users-cog"></i></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile">My profile <i class="fas fa-user-cog"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="home/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </div>
+</nav>
+
 <div class="container">
-    <a href="/adminPanel"><i class="fas fa-long-arrow-alt-left"></i> Go back to admin panel</a>
 
     <?php if (isset($error)): ?>
         <div class="text-center bg-danger p-3 text-white"><?= $error; ?></div>
@@ -88,11 +115,11 @@
                 <input type="checkbox" class="form-check-input" name="post_visibility" id="post_visibility">
                 Make your post invisible
                 <br>
-                <span><sup>*</sup> As default your post will be visible</span>
+                <span><sup>*</sup> By default your post will be visible</span>
             </label>
         </div>
 
-        <button type="submit" name="submit" class="btn btn-success mb-3">Create new post</button>
+        <button type="submit" name="submit" class="btn new_post text-white mb-3">Create new post</button>
 
     </form>
 </div>

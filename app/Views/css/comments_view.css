@@ -1,0 +1,12 @@
+* {
+    font-family: "Ubuntu Condensed", sans-serif;
+}
+
+.jumbotron
+{
+    background-color: #79ad36;
+}
+
+.one_comment strong {
+    color: darkblue;
+}
