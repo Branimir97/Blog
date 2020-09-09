@@ -91,7 +91,7 @@
         <button type="submit" name="submit" class="btn mt-3 login text-white">Login</button>
         <a role="button" href="/signup" class="btn mt-3 btn-secondary signup">Sign up</a>
     </form>
-    <a href="/forgotPassword" class="btn btn-sm mt-2 forgot_password">Forgot your password?</a><br>
+    <!--<a href="/forgotPassword" class="btn btn-sm mt-2 forgot_password">Forgot your password?</a><br>-->
 </div>
 
 
