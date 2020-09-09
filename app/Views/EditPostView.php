@@ -81,7 +81,7 @@ if (!isset($_SESSION['loggedIn_username']))
 
     <?php if (isset($error)): ?>
 
-        <div class="text-center bg-danger p-3 text-white"><?= $error; ?></div>
+        <div class="text-center bg-danger p-3 text-white mb-3"><?= $error; ?></div>
 
     <?php endif; ?>
 
@@ -96,13 +96,13 @@ if (!isset($_SESSION['loggedIn_username']))
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Account delete</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Really?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to delete your account?
+                    Are you sure you want to delete this post?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel

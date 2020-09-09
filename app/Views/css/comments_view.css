@@ -7,6 +7,16 @@
     background-color: #79ad36;
 }
 
-.one_comment strong {
-    color: darkblue;
+.one_comment {
+    background-color: lightgray;
+    border-left: 5px solid #79ad36;
+}
+
+.one_comment h6 {
+    font-size: 13px;
+}
+
+.one_comment p, .no_comments {
+    font-size: 11px;
+    color: dodgerblue;
 }

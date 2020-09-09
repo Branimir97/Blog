@@ -14,6 +14,10 @@ class AdminPanelController extends View
 
     protected $posts;
 
+    protected $edited;
+
+    protected $created;
+
     public function __construct(\PDO $db)
     {
         $this->db = $db;
@@ -21,12 +25,24 @@ class AdminPanelController extends View
         $this->postStorage = new MySqlDatabasePostStorage($this->db);
 
         $this->posts = $this->getAllAction();
+
+        if(isset($_SESSION['edited']))
+        {
+            $this->edited = $_SESSION['edited'];
+            unset($_SESSION['edited']);
+        }
+
+        if(isset($_SESSION['created']))
+        {
+            $this->edited = $_SESSION['created'];
+            unset($_SESSION['created']);
+        }
     }
 
     public function indexAction()
     {
         try {
-            echo parent::render('AdminPanelView', ['posts'=>$this->posts]);
+            echo parent::render('AdminPanelView', ['posts'=>$this->posts, 'edited'=>$this->edited, 'created'=>$this->created]);
         } catch (TemplateNotFoundException $e)
         {
             echo $e->getMessage();

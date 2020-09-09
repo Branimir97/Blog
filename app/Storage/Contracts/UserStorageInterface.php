@@ -19,4 +19,8 @@ interface UserStorageInterface
     public function delete($username);
 
     public function changePassword($oldPassword, $newPassword, $newPassword2);
+
+    public function checkUsername($username);
+
+    public function checkEmail($email);
 }

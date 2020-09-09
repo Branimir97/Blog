@@ -7,7 +7,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link rel="icon" href="Uploaded_images/logo.png">
+    <link rel="icon" href="../Uploaded_images/logo.png">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -27,7 +27,7 @@
 <body>
 
 <div class="jumbotron pt-3 pb-3 text-center text-white mb-0">
-    <h1><strong>Branimir's BLOG</strong></h1>
+    <h1><strong>Branimir's Blog</strong></h1>
 
     <?php
     if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
@@ -62,7 +62,7 @@
                     <a class="nav-link" href="/profile">My profile <i class="fas fa-user-cog"></i></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="home/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
+                    <a class="nav-link" href="logout">Logout <i class="fas fa-sign-out-alt"></i></a>
                 </li>
 
             <?php else: ?>
@@ -96,8 +96,8 @@
 
     <div id="comments" class="mb-3">
 
-        <?php if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true): ?>
-            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+        <?php if (isset($_SESSION['loggedIn'])): ?>
+            <button class="btn leave_comment text-white" type="button" data-toggle="collapse" data-target="#collapseExample"
                     aria-expanded="false" aria-controls="collapseExample">
                 <i class="far fa-comment"></i> Leave a comment
             </button>
@@ -138,6 +138,13 @@
                     <p>By: <strong><?= $comment->getPostedBy() ?></strong> at
                         <strong><?= $myDateFormat ?></strong></p>
                     <h6><?= $comment->getContent() ?></h6>
+                    <?php
+                        if(isset($_SESSION['loggedIn']) && ($_SESSION['loggedIn_fullName'] == $comment->getPostedBy())):
+                    ?>
+                    <a href="delete?id=<?= $comment->getId() ?>" class="btn btn-sm btn-danger" role="button">
+                        Delete comment <i class="fas fa-trash-alt"></i>
+                    </a>
+                    <?php endif; ?>
                 </div>
 
             <?php endforeach; ?>

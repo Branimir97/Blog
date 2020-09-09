@@ -98,9 +98,16 @@ if (!isset($_SESSION['loggedIn_username']))
                     </thead>
                     <tbody>
                     <?php foreach ($admins as $admin): ?>
+
+                        <?php
+                        $mysqldate = $admin->getCreated();
+                        $phpdate = strtotime($mysqldate);
+                        $myDateFormat = date('d. M Y. H:i:s', $phpdate);
+                        ?>
+
                         <tr>
                             <td><?= $admin->getUsername(); ?></td>
-                            <td><?= $admin->getCreated(); ?></td>
+                            <td><?= $myDateFormat ?></td>
                             <td>
 
                                 <?php if ($admin->getUsername() !== $_SESSION['loggedIn_username']): ?>
@@ -141,9 +148,15 @@ if (!isset($_SESSION['loggedIn_username']))
                     </thead>
                     <tbody>
                     <?php foreach ($users as $user): ?>
+
+                        <?php
+                        $mysqldate = $user->getCreated();
+                        $phpdate = strtotime($mysqldate);
+                        $myDateFormat = date('d. M Y. H:i:s', $phpdate);
+                        ?>
                         <tr>
                             <td><?= $user->getUsername(); ?></td>
-                            <td><?= $user->getCreated(); ?></td>
+                            <td><?= $myDateFormat ?></td>
                             <td>
                                 <form action="/addNewAdministrator/changeRole" method="post">
                                     <input type="hidden" name="id" value="<?= $user->getId(); ?>">

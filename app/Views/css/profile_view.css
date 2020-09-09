@@ -7,11 +7,13 @@
     background-color: #79ad36 !important;
 }
 
-h5 {
-    text-decoration: underline;
+.change_password
+{
+    background-color: #79ad36;
+    float: right;
 }
 
-.delete, .change_password {
+.delete {
     float: right;
 }
 

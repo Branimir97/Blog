@@ -17,21 +17,29 @@ class MySqlDatabasePostStorage implements PostStorageInterface
 
     public function store(Post $post)
     {
-        $statement = $this->db->prepare("
+        if(isset($_SESSION['image_errors']))
+        {
+            header("Location: /addNewPost");
+        } else
+        {
+            $statement = $this->db->prepare("
             INSERT INTO posts(title, intro, img_path, content, postedBy, created, visibility)
             VALUES (:title, :intro, :img_path, :content, :postedBy, :created, :visibility)
         ");
 
-        $statement->bindValue(':title', $post->getTitle());
-        $statement->bindValue(':intro', htmlspecialchars($post->getIntro()));
-        $statement->bindValue(':img_path', $post->getImgPath());
-        $statement->bindValue(':content', htmlspecialchars($post->getContent()));
-        $statement->bindValue(':postedBy', $post->getPostedBy());
-        $statement->bindValue(':created', $post->getCreated()->format("Y-m-d H:i:s"));
-        $statement->bindValue(':visibility', $post->getVisibility());
-        $statement->execute();
+            $statement->bindValue(':title', $post->getTitle());
+            $statement->bindValue(':intro', htmlspecialchars($post->getIntro()));
+            $statement->bindValue(':img_path', $post->getImgPath());
+            $statement->bindValue(':content', htmlspecialchars($post->getContent()));
+            $statement->bindValue(':postedBy', $post->getPostedBy());
+            $statement->bindValue(':created', $post->getCreated()->format("Y-m-d H:i:s"));
+            $statement->bindValue(':visibility', $post->getVisibility());
+            $statement->execute();
 
-        header("Location: /addNewPost");
+            header("Location: /adminPanel");
+
+            $_SESSION['created'] = 'Post successfully created.';
+        }
 
     }
 
@@ -105,28 +113,36 @@ class MySqlDatabasePostStorage implements PostStorageInterface
 
     public function update(Post $post)
     {
+        if(isset($_SESSION['image_errors']))
+        {
+            header("Location: /editPost/edit?id=".$post->getId());
+        } else
+        {
+            $imgPath = $this->getImgPath($post->getId());
 
-        $imgPath = $this->getImgPath($post->getId());
+            if ($imgPath !== $post->getImgPath()) {
+                unlink($imgPath);
+            }
 
-        if ($imgPath !== $post->getImgPath()) {
-            unlink($imgPath);
-        }
-
-        $statement = $this->db->prepare("
+            $statement = $this->db->prepare("
             UPDATE posts 
             SET title = :title, intro = :intro, img_path = :img_path, content = :content
             WHERE id = :id
         ");
 
-        $statement->bindValue(':title', $post->getTitle());
-        $statement->bindValue(':intro', $post->getIntro());
-        $statement->bindValue(':img_path', $post->getImgPath());
-        $statement->bindValue(':content', $post->getContent());
-        $statement->bindValue(':id', $post->getId());
+            $statement->bindValue(':title', $post->getTitle());
+            $statement->bindValue(':intro', $post->getIntro());
+            $statement->bindValue(':img_path', $post->getImgPath());
+            $statement->bindValue(':content', $post->getContent());
+            $statement->bindValue(':id', $post->getId());
 
-        $statement->execute();
+            $statement->execute();
 
-        header("Location: /editPost?id=".$post->getId());
+
+
+            header("Location: /adminPanel");
+        }
+
     }
 
     public function changeVisibility($id)
@@ -193,17 +209,17 @@ class MySqlDatabasePostStorage implements PostStorageInterface
 
         $imgPath = $this->getImgPath($id);
 
-        //unlink($imgPath);
+        unlink($imgPath);
 
         $statement = $this->db->prepare("
             DELETE FROM posts WHERE id = '$id'
         ");
 
-        //$statement->execute();
+        $statement->execute();
 
         $this->deleteComments($id);
 
-        header("Location: adminPanel/index");
+        header("Location: /adminPanel");
 
     }
 
@@ -216,7 +232,7 @@ class MySqlDatabasePostStorage implements PostStorageInterface
 
         $statement->bindValue(':id', $post_id);
 
-        //$statement->execute();
+        $statement->execute();
     }
 
 }

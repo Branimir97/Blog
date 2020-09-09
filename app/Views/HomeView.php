@@ -22,12 +22,12 @@
         <?php include 'css/homeview.css'; ?>
     </style>
 
-    <title>Blog</title>
+    <title>Branimir's Blog</title>
 
 </head>
 <body>
 <div class="jumbotron text-center pt-3 pb-3 mb-0 text-white">
-    <h1><strong>Branimir's BLOG</strong></h1>
+    <h1><strong>Branimir's Blog</strong></h1>
 
     <?php
     if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true):?>
@@ -103,7 +103,7 @@
                 <div class="p-2">
                     <p class="intro"><?= html_entity_decode($post->getIntro()) ?></p>
                 </div>
-                <a class="btn btn-sm btn-info" href="/postDetails/getPost?id=<?= $post->getId() ?>">READ MORE</a>
+                <a class="btn btn-sm btn-primary" href="/postDetails/getPost?id=<?= $post->getId() ?>">READ MORE</a>
 
                 <?php if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true): ?>
                     <a class="btn btn-sm btn-success" href="/postDetails/getPost?id=<?= $post->getId() ?>#comments">COMMENT</a>

@@ -79,6 +79,12 @@ if (!isset($_SESSION['loggedIn_username']))
 
 <div class="container-fluid">
 
+    <?php if (isset($edited)): ?>
+
+        <div class="text-center bg-success p-3 mt-3 text-white"><?= $edited ?></div>
+
+    <?php endif; ?>
+
     <?php if ($posts == null): ?>
 
         <h6 class="mt-3 p-3 text-center">There are currently no posts. Here you can <a href="/addNewPost">create</a>
@@ -86,12 +92,11 @@ if (!isset($_SESSION['loggedIn_username']))
 
     <?php else: ?>
 
-
         <table class="table text-center mt-3">
             <caption>List of active posts</caption>
             <thead>
             <tr>
-                <th>#</th>
+                <th>Jump</th>
                 <th>Title</th>
                 <th>Image thumbnail</th>
                 <th>Posted by</th>
@@ -111,7 +116,7 @@ if (!isset($_SESSION['loggedIn_username']))
                 ?>
 
                 <tr>
-                    <td><?= $post->getId() ?></td>
+                    <td><a title="Jump to post <?= $post->getTitle() ?>" href="/postDetails/getPost?id=<?= $post->getId() ?>"><i class="fas fa-location-arrow"></i></a></td>
                     <td><?= $post->getTitle() ?></td>
                     <td><a href="<?= $post->getImgPath() ?>" target="_blank"><img src="<?= $post->getImgPath() ?>"></a>
                     </td>
@@ -129,12 +134,12 @@ if (!isset($_SESSION['loggedIn_username']))
                         <?php endif; ?>
                     </td>
                     <td>
-                        <a href="editPost/edit?id=<?= $post->getId() ?>" role="button" class="btn btn-success">
+                        <a href="editPost/edit?id=<?= $post->getId() ?>" role="button" class="btn text-white edit_post">
                             <i class="far fa-edit"></i>
                         </a>
                     </td>
                     <td>
-                        <a href="comments/checkComments?id=<?= $post->getId() ?>" role="button" class="btn btn-info">
+                        <a href="comments/getComments?id=<?= $post->getId() ?>" role="button" class="btn btn-primary">
                             <i class="fas fa-comment-dots"></i>
                         </a>
                     </td>

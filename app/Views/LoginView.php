@@ -30,20 +30,28 @@
     <h1><strong>LOGIN </strong><i class="fas fa-sign-in-alt"></i></h1>
 </div>
 
-<?php
+<?php if (isset($_SESSION['loggedIn']) && ($_SESSION['loggedIn'] === true)):?>
 
-if (isset($_SESSION['loggedIn']) && ($_SESSION['loggedIn'] === true)):?>
+    <?php if (isset($_SESSION['admin_loggedIn']) && $_SESSION['admin_loggedIn'] == true): ?>
 
     <div class="text-center">
-        <a href="/" class="text-center btn btn-info">LOGOUT FIRST <i class="fas fa-sign-out-alt"></i></a>
-
+        <a href="/adminPanel"><i class="fas fa-long-arrow-alt-left"></i> Go back to Admin panel</a>
+        <h6 class="mt-3">Successfully registrated new user.</h6>
     </div>
+
+
+    <?php else: ?>
+    <div class="text-center">
+        <a href="/" class="text-center btn btn-info">LOGOUT FIRST <i class="fas fa-sign-out-alt"></i></a>
+    </div>
+    <?php endif; ?>
+
     <?php die();
         endif; ?>
 
 <?php if (isset($registered)): ?>
 
-    <div class="text-center bg-success p-3 mb-3 text-white">Uspješno ste se registrirali!</div>
+    <div class="text-center bg-success p-3 mb-3 text-white"><?= $registered ?></div>
 
 <?php endif; ?>
 
@@ -80,10 +88,10 @@ if (isset($_SESSION['loggedIn']) && ($_SESSION['loggedIn'] === true)):?>
                 Remember me
             </label>
         </div>
-
-        <button type="submit" name="submit" class="btn mt-3 login">Login</button>
+        <button type="submit" name="submit" class="btn mt-3 login text-white">Login</button>
         <a role="button" href="/signup" class="btn mt-3 btn-secondary signup">Sign up</a>
     </form>
+    <a href="/forgotPassword" class="btn btn-sm mt-2 forgot_password">Forgot your password?</a><br>
 </div>
 
 

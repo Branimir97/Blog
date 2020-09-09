@@ -82,7 +82,7 @@ class MySqlDatabaseUserStorage implements UserStorageInterface
             $statement->bindValue(':created', $user->getCreated()->format("Y-m-d H:i:s"));
             $statement->execute();
 
-            $_SESSION['registered'] = true;
+            $_SESSION['registered'] = 'Successfully created account. Now you can login.';
             header("Location: /login");
         }
     }
@@ -310,6 +310,51 @@ class MySqlDatabaseUserStorage implements UserStorageInterface
         $statement->execute();
     }
 
+    public function checkUsername($username)
+    {
+        $statement = $this->db->prepare("
+            SELECT username FROM users
+            WHERE username = :username
+        ");
+
+        $statement->bindValue(':username', $username);
+
+        $statement->setFetchMode(\PDO::FETCH_CLASS, User::class);
+
+        $statement->execute();
+
+        if($statement->rowCount()==0)
+        {
+            $_SESSION['recover_error'] = 'User does not exist.';
+            header("Location: /forgotPassword");
+        } else
+        {
+            return $statement->fetch()->getUsername();
+        }
+    }
+
+    public function checkEmail($email)
+    {
+        $statement = $this->db->prepare("
+            SELECT email FROM users
+            WHERE email = :email
+        ");
+
+        $statement->bindValue(':email', $email);
+
+        $statement->setFetchMode(\PDO::FETCH_CLASS, User::class);
+
+        $statement->execute();
+
+        if($statement->rowCount()==0)
+        {
+            $_SESSION['recover_error'] = 'User does not exist.';
+            header("Location: /forgotPassword");
+        } else
+        {
+            return $statement->fetch()->getEmail();
+        }
+    }
 }
 
 

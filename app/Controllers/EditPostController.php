@@ -17,34 +17,36 @@ class EditPostController extends View
 
     protected $postStorage;
 
+    protected $imgPath;
+
     public function __construct(\PDO $db)
     {
         $this->db = $db;
-        $this->postDetails = $this->editAction();
 
         $this->postStorage = new MySqlDatabasePostStorage($this->db);
 
         if(isset($_SESSION['image_errors']))
         {
             $this->error = $_SESSION['image_errors'];
-            session_destroy();
-        }
-        try {
-            echo parent::render('EditPostView', ['error'=>$this->error, 'postDetails'=>$this->postDetails]);
-        } catch (TemplateNotFoundException $e)
-        {
-            echo $e->getMessage();
+            unset($_SESSION['image_errors']);
         }
     }
-
-
 
     public function editAction()
     {
 
         $id = $_GET['id'];
         $postStorage = new MySqlDatabasePostStorage($this->db);
-        return $postStorage->get($id);
+
+        $this->postDetails = $postStorage->get($id);
+        $this->imgPath = $this->postDetails->getImgPath();
+        try {
+            echo parent::render('EditPostView', ['error'=>$this->error, 'postDetails'=>$this->postDetails]);
+        } catch (TemplateNotFoundException $e)
+        {
+            echo $e->getMessage();
+        }
+
     }
 
     public function updateAction()
@@ -67,7 +69,7 @@ class EditPostController extends View
 
                 }
                 else{
-                    $post->setImgPath($this->postDetails->getImgPath());
+                    $post->setImgPath($this->imgPath);
                 }
 
                 $post->setTitle($_POST['title']);

@@ -15,42 +15,37 @@ class PostDetailsController extends View
 
     protected $postDetails;
 
+    protected $commentStorage;
+
     protected $commentsDetails;
 
     public function __construct(\PDO $db)
     {
-
         $this->db = $db;
-
-        $this->postDetails = $this->getPostAction();
-
-        $this->commentsDetails = $this->getComments();
-
-    }
-
-    public function indexAction()
-    {
-        try {
-            echo parent::render('PostDetailsView', ['postDetails'=>$this->postDetails, 'commentsDetails'=>$this->commentsDetails]);
-        } catch(TemplateNotFoundException $e)
-        {
-            echo $e->getMessage();
-        }
+        $this->commentStorage = new MySqlDatabaseCommentStorage($this->db);
     }
 
     public function getPostAction()
     {
         $post_id = $_GET['id'];
         $postStorage = new MySqlDatabasePostStorage($this->db);
-        return $postStorage->get($post_id);
+        $this->postDetails = $postStorage->get($post_id);
+        $this->commentsDetails = $this->getComments();
+
+        try {
+            echo parent::render('PostDetailsView', ['postDetails'=>$this->postDetails, 'commentsDetails'=>$this->commentsDetails]);
+        } catch(TemplateNotFoundException $e)
+        {
+            echo $e->getMessage();
+        }
+
     }
 
     public function postCommentAction()
     {
         if($_SERVER['REQUEST_METHOD'] === "POST")
         {
-            if(isset($_POST['submit_comment']))
-            {
+            if(isset($_POST['submit_comment'])) {
                 date_default_timezone_set('Europe/Zagreb');
 
                 $comment = new Comment();
@@ -69,9 +64,28 @@ class PostDetailsController extends View
 
     public function getComments()
     {
-        $commentStorage = new MySqlDatabaseCommentStorage($this->db);
+        return $this->commentStorage->get($_GET['id']);
+    }
 
-        return $commentStorage->get($_GET['id']);
+    public function logoutAction()
+    {
+        if(isset($_COOKIE['username']) && isset($_COOKIE['password']))
+        {
+            unset($_COOKIE['username']);
+            unset($_COOKIE['password']);
+        }
+
+        session_unset();
+        session_destroy();
+        header("Location: /");
+    }
+
+    public function deleteAction()
+    {
+        $comment_id = $_GET['id'];
+        $post_id = $this->commentStorage->getPostId($comment_id);
+        $this->commentStorage->delete($comment_id, $post_id);
+        header("Location: /postDetails/getPost?id=".$post_id.'#comments');
     }
 
 }

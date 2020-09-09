@@ -96,20 +96,11 @@ if (!isset($_SESSION['loggedIn_username']))
             $myDateFormat = date('d. M Y. H:i:s', $phpdate);
             ?>
 
-            <div class="one_comment bg-info text-center">
-
-                <h5 class="mt-3 text-center p-2"><?= $comment->getContent(); ?></h5>
-                <p class="mt-3 mb-1 text-center">
-                    Posted by:
-                    <strong>
-                        <?= $comment->getPostedBy(); ?>
-                    </strong>
-                    at
-                    <strong>
-                        <?= $myDateFormat ?>
-                    </strong>
-                </p>
-                <a href="delete?id=<?= $comment->getId() ?>" class="btn btn-danger m-1" role="button">
+            <div class="one_comment pt-3 pl-3 mt-3 pb-1">
+                <p>By: <strong><?= $comment->getPostedBy() ?></strong> at
+                    <strong><?= $myDateFormat ?></strong></p>
+                <h6><?= $comment->getContent() ?></h6>
+                <a href="delete?id=<?= $comment->getId() ?>" class="btn btn-sm btn-danger" role="button">
                     Delete comment <i class="fas fa-trash-alt"></i>
                 </a>
             </div>

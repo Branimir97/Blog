@@ -48,17 +48,32 @@ class MySqlDatabaseCommentStorage implements CommentStorageInterface
         return $statement->fetchAll();
     }
 
-    public function delete($id)
+    public function delete($comment_id, $post_id)
     {
         $statement = $this->db->prepare("
             DELETE FROM comments
             WHERE id = :id
         ");
 
-        $statement->bindValue(':id', $id);
+        $statement->bindValue(':id', $comment_id);
 
         $statement->execute();
 
-        header("Location: /adminPanel");
+    }
+
+    public function getPostId($comment_id)
+    {
+        $statement = $this->db->prepare("
+            SELECT post_id FROM comments
+            WHERE id = :id 
+        ");
+
+        $statement->bindValue(':id', $comment_id);
+
+        $statement->setFetchMode(\PDO::FETCH_CLASS, Comment::class);
+
+        $statement->execute();
+
+        return $statement->fetch()->getPostId();
     }
 }

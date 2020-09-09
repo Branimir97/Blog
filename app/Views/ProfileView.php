@@ -99,7 +99,7 @@ if (!isset($_SESSION['loggedIn_username']))
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Account delete</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Really?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times</span>
                     </button>
@@ -117,7 +117,7 @@ if (!isset($_SESSION['loggedIn_username']))
         </div>
     </div>
 
-    <a href="/changePassword" class="btn btn-info change_password mr-1">Change password</a>
+    <a href="/changePassword" class="btn change_password mr-1 text-white">Change password</a>
 
     <h5 class="mt-3">Account details</h5>
 

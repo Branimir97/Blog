@@ -10,6 +10,8 @@ interface CommentStorageInterface
 
     public function get($id);
 
-    public function delete($id);
+    public function delete($comment_id, $post_id);
+
+    public function getPostId($comment_id);
 
 }

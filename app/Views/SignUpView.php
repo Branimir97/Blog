@@ -37,7 +37,15 @@
     <?php endif; ?>
     <div class="container">
 
-        <a href="/login"><i class="fas fa-long-arrow-alt-left"></i> Go back to login page</a>
+        <?php if (isset($_SESSION['admin_loggedIn']) && $_SESSION['admin_loggedIn'] == true): ?>
+
+        <a href="/adminPanel"><i class="fas fa-long-arrow-alt-left"></i> Go back to Admin panel</a>
+
+        <?php else: ?>
+
+            <a href="/login"><i class="fas fa-long-arrow-alt-left"></i> Go back to login page</a>
+
+        <?php endif; ?>
 
         <form action="signup/create" method="post">
 
@@ -71,7 +79,7 @@
                 <small id="helpId" class="text-muted">Here you need to enter some good password</small>
             </div>
 
-            <button type="submit" name="submit" class="btn signup">Sign up</button>
+            <button type="submit" name="submit" class="btn signup mb-3 text-white">Sign up</button>
         </form>
     </div>
 
