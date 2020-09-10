@@ -69,7 +69,7 @@ class EditPostController extends View
 
                 }
                 else{
-                    $post->setImgPath($this->imgPath);
+                    $post->setImgPath($this->postStorage->getImgPath($post->getId()));
                 }
 
                 $post->setTitle($_POST['title']);

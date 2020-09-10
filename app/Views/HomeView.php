@@ -87,9 +87,9 @@
 
         <?php foreach ($posts as $post) : ?>
             <div class="one_post p-3 mb-3 mt-5">
-                <h4 class="p-3"><?= $post->getTitle() ?></h4>
+                <h4 class="p-3"><b><?= $post->getTitle() ?></b></h4>
                 <div class="fake-img">
-                    <a href="/postDetails/getPost?id=<?= $post->getId() ?>"><img src="<?= $post->getImgPath() ?>"></a>
+                    <a href="/postDetails/getPost?id=<?= $post->getId() ?>"><img src="<?= $post->getImgPath() ?>" title="<?= $post->getTitle() ?>"></a>
                 </div>
 
                 <?php

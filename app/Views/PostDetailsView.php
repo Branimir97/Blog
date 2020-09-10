@@ -82,7 +82,7 @@
     $myDateFormat = date('d. M Y. H:i:s', $phpdate);
     ?>
 
-    <h1 class="text-center title mt-3"><?= $postDetails->getTitle() ?></h1>
+    <h1 class="text-center title mt-3"><b><?= $postDetails->getTitle() ?></b></h1>
     <p class="text-center mt-3 date"><?= $myDateFormat ?></p>
     <div class="fake-img">
         <img src="<?= '../' . $postDetails->getImgPath() ?>">

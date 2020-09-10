@@ -14,7 +14,7 @@ if (!isset($_SESSION['loggedIn_username']))
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link rel="icon" href="Uploaded_images/logo.png">
+    <link rel="icon" href="/Uploaded_images/logo.png">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"

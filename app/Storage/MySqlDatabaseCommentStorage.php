@@ -28,7 +28,7 @@ class MySqlDatabaseCommentStorage implements CommentStorageInterface
 
         $statement->execute();
 
-        header("Location: /postDetails/getPost?id=".$comment->getPostId());
+        header("Location: /postDetails/getPost?id=".$comment->getPostId().'#comments');
     }
 
     public function get($id)
